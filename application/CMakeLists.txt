@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.12)
-project(Application)
+project(${APP_LIBRARY})
 
-set(SOURCE_LIB application.cpp)
+include(sources.cmake)
 
-add_library(application STATIC ${SOURCE_LIB})
+add_library(${APP_LIBRARY} STATIC ${${APP_LIBRARY}_SOURCES})

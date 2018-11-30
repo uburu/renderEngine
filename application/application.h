@@ -1,8 +1,7 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
-#include "../command.h"
-#include "model.h"
+#include "commands/command.h"
 
 class Application
 {
@@ -10,7 +9,6 @@ public:
     Application() = default;
     void setCommand(Command *command);
     void test_function();
-    Model *model;
 
 private:
     Command *_command;
