@@ -480,6 +480,20 @@ TEST(TestMatrix, TestTranspose) {
 
     EXPECT_EQ(m1.Transposed(), m2);
     EXPECT_EQ(m2.Transposed(), m1);
+
+    Matrix m3x3 = {
+        { 1, 2, 3 },
+        { 4, 5, 6 },
+        { 7, 8, 9 }
+    };
+
+    Matrix r3x3 = {
+        {14, 32, 50},
+        {32, 77, 122},
+        {50, 122, 194}
+    };
+
+    EXPECT_EQ(m3x3 * m3x3.Transposed(), r3x3);
 }
 
 TEST(TestMatrix, TestShare) {
