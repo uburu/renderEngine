@@ -86,7 +86,7 @@ public:
     bool operator!=(const Matrix &) const;
 
     template <typename ElementConverter>
-    Matrix<std::invoke_result_t<ElementConverter, std::add_lvalue_reference_t<T>>> Convert(ElementConverter) const;
+    Matrix<std::invoke_result_t<ElementConverter, std::add_lvalue_reference_t<T>>> Map(ElementConverter) const;
 
     size_t GetRows()    const;
     size_t GetColumns() const;
@@ -516,7 +516,7 @@ template <typename U>
 Matrix<T>::operator Matrix<U>() const {
     static_assert(std::is_convertible_v<T, U>, "Matrix: apply cast operator (source type isn't convertible to target type)");
 
-    return Convert([](auto &original) {
+    return Map([](auto &original) {
         return static_cast<U>(original);
     });
 } 
@@ -566,7 +566,7 @@ bool Matrix<T>::operator!=(const Matrix &rhs) const {
 
 template <typename T>
 template <typename ElementConverter>
-Matrix<std::invoke_result_t<ElementConverter, std::add_lvalue_reference_t<T>>> Matrix<T>::Convert(ElementConverter converter) const {
+Matrix<std::invoke_result_t<ElementConverter, std::add_lvalue_reference_t<T>>> Matrix<T>::Map(ElementConverter converter) const {
     Matrix<std::invoke_result_t<ElementConverter, std::add_lvalue_reference_t<T>>> result(rows, columns, order);
     result.is_transposed = is_transposed;
 

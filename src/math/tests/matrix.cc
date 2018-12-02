@@ -330,7 +330,7 @@ TEST(TestMatrix, TestConvert) {
         {2, 3}
     };
 
-    auto c = m.Convert([](auto v) {
+    auto c = m.Map([](auto v) {
         return static_cast<int>(std::ceil(v));
     });
 
