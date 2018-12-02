@@ -221,7 +221,7 @@ is_transposed(false) {
     rows      = list.size();
     columns   = list.begin()->size();
     data_size = rows*columns;
-    elements.reset(new T[data_size]);
+    elements.reset(new T[data_size], std::default_delete<T[]>());
 
     size_t i = 0, j = 0;
     for(auto &&row : list) {
@@ -246,7 +246,7 @@ Matrix<T>::Matrix(const Matrix &other)
 : rows(other.rows), 
 columns(other.columns), 
 data_size(other.data_size), 
-elements(new T[data_size]), 
+elements(new T[data_size], std::default_delete<T[]>()), 
 order(other.order), 
 is_transposed(other.is_transposed) {
     std::copy(
