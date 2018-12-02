@@ -321,7 +321,7 @@ TEST(TestMatrix, TestUnaryMinus) {
     EXPECT_EQ(-m, (-1)*m);
 }
 
-TEST(TestMatrix, TestConvert) {
+TEST(TestMatrix, TestMap) {
     Matrix m = {
         {1.23, 2.55}
     };
