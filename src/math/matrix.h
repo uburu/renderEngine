@@ -134,11 +134,11 @@ protected:
     template <typename U>
     friend class Matrix;
 
-    Matrix(size_t rows, size_t columns, size_t data_size, std::shared_ptr<T[]> elements, MatrixOrder order, bool is_transposed);
+    Matrix(size_t rows, size_t columns, size_t data_size, std::shared_ptr<T> elements, MatrixOrder order, bool is_transposed);
 
     size_t               rows, columns;
     size_t               data_size;
-    std::shared_ptr<T[]> elements;
+    std::shared_ptr<T> elements;
     MatrixOrder          order;
     bool                 is_transposed;
 
@@ -192,7 +192,7 @@ Matrix<T>::Matrix(size_t rows, size_t columns, const T &initial_value, MatrixOrd
 : rows(rows), 
 columns(columns), 
 data_size(rows*columns), 
-elements(new T[data_size]), 
+elements(new T[data_size], std::default_delete<T[]>()), 
 order(order), 
 is_transposed(false) {
     assert(rows > 0 && columns > 0 && "Zero size matrix");
@@ -238,7 +238,7 @@ is_transposed(false) {
 }
 
 template <typename T>
-Matrix<T>::Matrix(size_t rows, size_t columns, size_t data_size, std::shared_ptr<T[]> elements, MatrixOrder order, bool is_transposed)
+Matrix<T>::Matrix(size_t rows, size_t columns, size_t data_size, std::shared_ptr<T> elements, MatrixOrder order, bool is_transposed)
 : rows(rows), columns(columns), data_size(data_size), elements(elements), order(order), is_transposed(is_transposed) {}
 
 template <typename T>
@@ -651,8 +651,8 @@ T &Matrix<T>::At(size_t i, size_t j) {
 
     if(is_transposed) std::swap(i, j);
 
-    if(order == MatrixOrder::kRowMajor) return elements[columns*i + j];
-    else return elements[rows*j + i];
+    if(order == MatrixOrder::kRowMajor) return elements.get()[columns*i + j];
+    else return elements.get()[rows*j + i];
 }
 
 template <typename T>
