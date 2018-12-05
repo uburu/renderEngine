@@ -51,6 +51,7 @@ public:
 
     Matrix &operator=(const Matrix &rhs);
     Matrix &operator=(Matrix &&rhs);
+    Matrix &operator=(std::initializer_list<std::initializer_list<T>>);
     void operator+=(T rhs);
     void operator-=(T rhs);
     void operator*=(T rhs);
@@ -292,6 +293,13 @@ Matrix<T> &Matrix<T>::operator=(Matrix &&rhs) {
     order         = rhs.order;
     is_transposed = rhs.is_transposed;
 
+    return *this;
+}
+
+template <typename T>
+Matrix<T> &Matrix<T>::operator=(std::initializer_list<std::initializer_list<T>> list) {
+    Matrix new_matrix(list);
+    *this = std::move(new_matrix);
     return *this;
 }
 

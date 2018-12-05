@@ -35,6 +35,25 @@ TEST(TestMatrix, BasicTests) {
     }
 
     {
+        Matrix m1 = { 
+            { 1, 2, 3 },
+            { 4, 5, 6 }
+        };
+
+        Matrix r = { 
+            { 1, 20 },
+            { 4, 50 }
+        };
+
+        m1 = {
+            { 1, 20 },
+            { 4, 50 }
+        };
+
+        ASSERT_EQ(m1, r);
+    }
+
+    {
         Matrix m1(3, 4, 10.);
         Matrix m2(m1);
 
