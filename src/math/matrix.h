@@ -139,7 +139,7 @@ protected:
 
     size_t               rows, columns;
     size_t               data_size;
-    std::shared_ptr<T> elements;
+    std::shared_ptr<T>   elements;
     MatrixOrder          order;
     bool                 is_transposed;
 
