@@ -13,12 +13,12 @@ public:
     Matrix4x4(MatrixOrder = MatrixOrder::kRowMajor);
     Matrix4x4(const T &initial_value, MatrixOrder = MatrixOrder::kRowMajor);
     Matrix4x4(std::initializer_list<std::initializer_list<T>> list, MatrixOrder = MatrixOrder::kRowMajor);
-    Matrix4x4(const Matrix &);
-    Matrix4x4(Matrix &&);
+    Matrix4x4(const Matrix<T> &);
+    Matrix4x4(Matrix<T> &&);
 
     Matrix4x4 &operator=(std::initializer_list<std::initializer_list<T>>);
     void operator*=(const Matrix4x4 &);
-    void operator*=(const Matrix &);
+    void operator*=(const Matrix<T> &);
 
     Matrix4x4 operator+(T rhs)                const;
     Matrix4x4 operator-(T rhs)                const;
@@ -95,7 +95,7 @@ Matrix4x4<T>::Matrix4x4(std::initializer_list<std::initializer_list<T>> list, Ma
 
         j = 0;
         for(auto &&element : row) {
-            At(i, j) = element;
+            this->At(i, j) = element;
             ++j;
         }
 
@@ -104,12 +104,12 @@ Matrix4x4<T>::Matrix4x4(std::initializer_list<std::initializer_list<T>> list, Ma
 }
 
 template <typename T>
-Matrix4x4<T>::Matrix4x4(const Matrix &other): Matrix<T>(other) {
+Matrix4x4<T>::Matrix4x4(const Matrix<T> &other): Matrix<T>(other) {
     assert(other.GetRows() == 4 && other.GetColumns() == 4 && "Invalid size of Matrix4x4");
 }
 
 template <typename T>
-Matrix4x4<T>::Matrix4x4(Matrix &&other): Matrix<T>(std::move(other)) {
+Matrix4x4<T>::Matrix4x4(Matrix<T> &&other): Matrix<T>(std::move(other)) {
     assert(other.GetRows() == 4 && other.GetColumns() == 4 && "Invalid size of Matrix4x4");
 }
 
@@ -128,7 +128,7 @@ void Matrix4x4<T>::operator*=(const Matrix4x4 &rhs) {
 }
 
 template <typename T>
-void Matrix4x4<T>::operator*=(const Matrix &rhs) {
+void Matrix4x4<T>::operator*=(const Matrix<T> &rhs) {
     assert(rhs.GetRows() == 4 && rhs.GetColumns() == 4 && "Can't apply Matrix4x4 *= MatrixUxV where U,V != 4");
 
     Matrix<T>::operator*=(rhs);

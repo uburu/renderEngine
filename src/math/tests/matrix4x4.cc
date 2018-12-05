@@ -4,8 +4,8 @@
 
 TEST(TestMatrix4x4, BasicTests) {
     {
-        Matrix4x4 m1;
-        Matrix4x4 m2;
+        Matrix4x4<> m1;
+        Matrix4x4<> m2;
 
         ASSERT_EQ(m1, m2);
         ASSERT_EQ(m1.GetRows(), 4);
