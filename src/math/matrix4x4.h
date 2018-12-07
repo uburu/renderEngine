@@ -15,7 +15,11 @@ public:
     Matrix4x4(std::initializer_list<std::initializer_list<T>> list, MatrixOrder = MatrixOrder::kRowMajor);
     Matrix4x4(const Matrix<T> &);
     Matrix4x4(Matrix<T> &&);
+    Matrix4x4(const Matrix4x4 &) = default;
+    Matrix4x4(Matrix4x4 &&) = default;
 
+    Matrix4x4 &operator=(const Matrix4x4 &) = default;
+    Matrix4x4 &operator=(Matrix4x4 &&) = default;
     Matrix4x4 &operator=(std::initializer_list<std::initializer_list<T>>);
     void operator*=(const Matrix4x4 &);
     void operator*=(const Matrix<T> &);
@@ -28,6 +32,7 @@ public:
     Matrix4x4 operator-(const Matrix4x4 &rhs) const;
 
     // WARNING: result order matches with >>this<< matrix (lhs)
+    using Matrix<T>::operator*;
     Matrix4x4 operator*(const Matrix4x4 &rhs) const;
 
     const Matrix4x4 &operator+() const;
@@ -141,6 +146,11 @@ Matrix4x4<T> Matrix4x4<T>::operator+(T rhs) const {
 }
 
 template <typename T>
+Matrix4x4<T> operator+(T lhs, const Matrix4x4<T> &rhs) {
+    return rhs + lhs;
+}
+
+template <typename T>
 Matrix4x4<T> Matrix4x4<T>::operator-(T rhs) const {
     return Matrix4x4(std::move(*this - rhs));
 }
@@ -148,6 +158,11 @@ Matrix4x4<T> Matrix4x4<T>::operator-(T rhs) const {
 template <typename T>
 Matrix4x4<T> Matrix4x4<T>::operator*(T rhs) const {
     return Matrix4x4(std::move(*this * rhs));
+}
+
+template <typename T>
+Matrix4x4<T> operator*(T lhs, const Matrix4x4<T> &rhs) {
+    return rhs * lhs;
 }
 
 template <typename T>
