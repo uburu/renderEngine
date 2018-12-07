@@ -12,6 +12,7 @@
 #include <type_traits>
 #include <cmath>
 #include <atomic>
+#include <iostream>
 
 #include <pstl/algorithm>
 #include <pstl/execution>
@@ -771,5 +772,21 @@ void Matrix<T>::SetColumnGrainsize(size_t grainsize) {
     column_grainsize = grainsize;
 }
 #endif // UU_DISABLE_PARALLEL_MATRIX
+
+template <typename T>
+std::ostream &operator<<(std::ostream &lhs, const Matrix<T> &rhs) {
+    size_t rows = rhs.GetRows(), columns = rhs.GetColumns();
+
+    for(size_t i = 0, j = 0; i < rows; ++i) {
+
+        lhs << "{ ";
+
+        for(j = 0; j < columns; ++j) lhs << rhs.At(i, j) << ' ';
+
+        lhs << '}' << std::endl;
+    }
+
+    return lhs;
+}
 
 #endif // UBURU_RENDERENGINE_MATRIX_H
