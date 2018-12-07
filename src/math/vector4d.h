@@ -90,28 +90,49 @@ public:
 /* IMPLEMENTATION */
 
 namespace detail {
-    template <typename T>
+    template <size_t DIMENSION = 4, typename T = double>
     Matrix<T> MakeVectorFromMatrix(const Matrix<T> &other) {
         assert(
-            (other.GetRows() == 4 && other.GetColumns() == 1)
-            || (other.GetRows() == 1 && other.GetColumns() == 4)
+            (other.GetRows() == DIMENSION && other.GetColumns() == 1)
+            || (other.GetRows() == 1 && other.GetColumns() == DIMENSION)
             && "Invalid Matrix size for Vector4d"
         );
 
-        if(other.GetRows() == 4 && other.GetColumns() == 1) return std::move(other.Share());
-        else return other.Transposed();
+        auto matrix = ((other.GetRows() == DIMENSION && other.GetColumns() == 1)?
+                      std::move(other.Share())
+                      : other.Transposed());
+
+        if constexpr(DIMENSION < 4) {
+            Matrix<T> result(4, 1, 0, MatrixOrder::kRowMajor);
+            
+            for(size_t i = 0; i < DIMENSION; ++i)
+                result.At(i, 0) = matrix.At(i, 0);
+            return result;
+        } else {
+            return matrix;
+        }     
     }
 
-    template <typename T>
+    template <size_t DIMENSION, typename T>
     Matrix<T> MakeVectorFromMatrix(Matrix<T> &&other) {
         assert(
-            (other.GetRows() == 4 && other.GetColumns() == 1)
-            || (other.GetRows() == 1 && other.GetColumns() == 4)
+            (other.GetRows() == DIMENSION && other.GetColumns() == 1)
+            || (other.GetRows() == 1 && other.GetColumns() == DIMENSION)
             && "Invalid Matrix size for Vector4d"
         );
 
-        if(other.GetRows() == 1 && other.GetColumns() == 4) other.Transpose();
-        return std::move(other);
+        if(other.GetRows() == 1 && other.GetColumns() == DIMENSION) other.Transpose();
+
+
+        if constexpr(DIMENSION < 4) {
+            Matrix<T> result(4, 1, 0, MatrixOrder::kRowMajor);
+            
+            for(size_t i = 0; i < DIMENSION; ++i)
+                result.At(i, 0) = other.At(i, 0);
+            return std::move(result);
+        } else {
+            return std::move(other);
+        }
     }
 }
 

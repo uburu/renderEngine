@@ -1,0 +1,107 @@
+#include "vector3d.h"
+
+#include <gtest/gtest.h>
+
+TEST(TestVector3d, BasicTests) {
+    {
+        Vector3d<> a;
+        Vector3d<> b;
+
+        ASSERT_EQ(a, b);
+    }
+
+    {
+        Vector3d a(1, 2, 3);
+        Vector3d b(1, 2, 3);
+
+        ASSERT_EQ(a, b);
+    }
+
+    {
+        Matrix m(1, 3, 3.14);
+        Vector3d v(m);
+        Vector3d r(3.14, 3.14, 3.14);
+
+        ASSERT_EQ(v, r);
+    }
+
+    {
+        Matrix m(3, 1, 3.14);
+        Vector3d v(m);
+        Vector3d r(3.14, 3.14, 3.14);
+
+        ASSERT_EQ(v, r);
+    }
+
+    {
+        Matrix m(3, 1, 3.14);
+        Vector3d v(std::move(m));
+        Vector3d r(3.14, 3.14, 3.14);
+
+        ASSERT_EQ(v, r);
+    }
+}
+
+TEST(TestVector3d, TestScalarAdd) {
+    Vector3d v(0, 0, 1);
+    Vector3d v_assign(v);
+
+    v_assign += 10;
+
+    Vector3d r(10, 10, 11);
+
+    EXPECT_EQ(v_assign, r);
+    EXPECT_EQ(v + 10, r);
+    EXPECT_EQ(10 + v, r);
+}
+
+TEST(TestVector3d, TestScalarSub) {
+    Vector3d v(0, 0, 1);
+    Vector3d v_assign(v);
+
+    v_assign -= 10;
+
+    Vector3d r(-10, -10, -9);
+
+    EXPECT_EQ(v_assign, r);
+    EXPECT_EQ(v - 10, r);  
+}
+
+TEST(TestVector3d, TestScalarDiv) {
+    Vector3d v(10, 10, 20);
+    Vector3d v_assign(v);
+
+    v_assign /= 2;
+
+    Vector3d r(5, 5, 10);
+
+    EXPECT_EQ(v_assign, r);
+    EXPECT_EQ(v / 2, r); 
+}
+
+TEST(TestVector3d, TestVectorMatrixMul) {
+    Matrix m(1, 1, 10);
+    Vector3d v(1, 1, 1);
+
+    Matrix r(3, 1, 10);
+
+    EXPECT_EQ(v * m, r); 
+}
+
+TEST(TestVector3d, TestCastOperator) {
+    Vector3d<double> v(1.2, 2.4, 3.3);
+    Vector3d<int> v_int(1, 2, 3);
+
+    EXPECT_EQ(v_int, static_cast<Vector3d<int>>(v));
+}
+
+TEST(TestVector3d, TestMap) {
+    Vector3d<double> v(1.2, 2.4, 3.3);
+    Vector3d<int> v_int(2, 3, 4);
+
+    auto c = v.Map([](auto element) {
+        return static_cast<int>(std::ceil(element));
+    });
+
+    EXPECT_EQ(v_int, c);
+}
