@@ -10,6 +10,16 @@ enum VectorOrientation {
 
 template <typename T = double>
 class Vector4d : public Matrix<T> {
+    using Matrix<T>::GetRows;
+    using Matrix<T>::GetColumns;
+    using Matrix<T>::At;
+    using Matrix<T>::Transpose;
+    using Matrix<T>::Transposed;
+    using Matrix<T>::Share;
+    using Matrix<T>::Identity;
+    using Matrix<T>::Zero;
+    using Matrix<T>::Diagonal;
+    using Matrix<T>::Square;
 public:
     Vector4d();
     Vector4d(T x, T y, T z, T w);
@@ -68,29 +78,14 @@ public:
     T Dot(const Vector4d &) const;
 
     T Norm() const;
-    T Length() const;
+    double Length() const;
     void Normalize();
     Vector4d Normalized() const;
 
     Vector4d Share() const;
 
     Matrix<T> AsMatrix(VectorOrientation) const;
-
-private:
-    using Matrix<T>::GetRows;
-    using Matrix<T>::GetColumns;
-    using Matrix<T>::At;
-    using Matrix<T>::Transpose;
-    using Matrix<T>::Transposed;
-    using Matrix<T>::Share;
-    using Matrix<T>::Identity;
-    using Matrix<T>::Zero;
-    using Matrix<T>::Diagonal;
-    using Matrix<T>::Square;
 };
-
-
-
 
 /* IMPLEMENTATION */
 
@@ -204,7 +199,7 @@ Vector4d<T> Vector4d<T>::operator-() const {
 template <typename T>
 template <typename U>
 Vector4d<T>::operator Vector4d<U>() const {
-    return std::move(static_cast<const Matrix<U> &>(static_cast<const Matrix<T> &>(*this)));
+    return std::move(static_cast<const Matrix<U>>(static_cast<const Matrix<T>>(*this)));
 } 
 
 template <typename T>
@@ -334,7 +329,7 @@ T Vector4d<T>::Norm() const {
 }
 
 template <typename T>
-T Vector4d<T>::Length() const {
+double Vector4d<T>::Length() const {
     return sqrt(Norm());
 }
 
