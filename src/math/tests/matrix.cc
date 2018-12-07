@@ -168,6 +168,24 @@ TEST(TestMatrix, TestScalarAdd) {
 
 }
 
+TEST(TestMatrix, TestScalarSub) {
+    Matrix m = {
+        {1, 2},
+        {3, 4}
+    };
+
+    Matrix m_assign(m);
+    m_assign -= 10;
+
+    Matrix r = {
+        {-9, -8},
+        {-7, -6}
+    };
+
+    EXPECT_EQ(m - 10, r);
+    EXPECT_EQ(m_assign, r);
+}
+
 TEST(TestMatrix, TestScalarMul) {
     Matrix m = {
         {1, 2},
