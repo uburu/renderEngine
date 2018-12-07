@@ -434,11 +434,6 @@ Matrix<T> operator+(T lhs, const Matrix<T> &rhs) {
 }
 
 template <typename T>
-Matrix<T> operator-(T lhs, const Matrix<T> &rhs) {
-    return rhs - lhs;
-}
-
-template <typename T>
 Matrix<T> operator*(T lhs, const Matrix<T> &rhs) {
     return rhs * lhs;
 }
