@@ -144,7 +144,7 @@ TEST(TestVector3d, TestAsMatrix) {
         { 1.1, 1.2, 1.3, 0.0 }
     };
 
-    EXPECT_EQ(v4.AsMatrix(VectorOrientation::kVertical).RawData(), v4.RawData());
+    EXPECT_EQ(v.AsMatrix(VectorOrientation::kVertical).RawData(), v4.RawData());
     EXPECT_EQ(v4.AsMatrix(VectorOrientation::kVertical), vert4);
     EXPECT_EQ(v4.AsMatrix(VectorOrientation::kHorizontal), horiz4);
 }
