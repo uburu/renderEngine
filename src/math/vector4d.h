@@ -20,6 +20,7 @@ class Vector4d : public Matrix<T> {
     using Matrix<T>::Zero;
     using Matrix<T>::Diagonal;
     using Matrix<T>::Square;
+    using Matrix<T>::operator*=;
 public:
     Vector4d();
     Vector4d(T x, T y, T z, T w);
@@ -32,6 +33,8 @@ public:
     Vector4d &operator=(Vector4d &&) = default;
 
     using Matrix<T>::operator*;
+
+    void operator*=(T rhs);
 
     Vector4d operator+(T rhs)               const;
     Vector4d operator-(T rhs)               const;
@@ -98,7 +101,7 @@ namespace detail {
             && "Invalid Matrix size for Vector4d"
         );
 
-        auto matrix = ((other.GetRows() == DIMENSION && other.GetColumns() == 1)?
+        Matrix<T> matrix = ((other.GetRows() == DIMENSION && other.GetColumns() == 1)?
                       std::move(other.Share())
                       : other.Transposed());
 
@@ -107,10 +110,10 @@ namespace detail {
             
             for(size_t i = 0; i < DIMENSION; ++i)
                 result.At(i, 0) = matrix.At(i, 0);
-            return result;
-        } else {
-            return matrix;
-        }     
+            matrix = std::move(result);        
+        }
+
+        return matrix;     
     }
 
     template <size_t DIMENSION, typename T>
@@ -161,6 +164,10 @@ Vector4d<T>::Vector4d(Matrix<T> &&other)
     assert(other.GetRows() == 4 && other.GetColumns() == 1 && "Invalid Matrix size for Vector4d");
 }
 
+template <typename T>
+void Vector4d<T>::operator*=(T rhs) {
+    return Matrix<T>::operator*=(rhs);
+}
 
 template <typename T>
 Vector4d<T> Vector4d<T>::operator+(T rhs) const {
@@ -220,7 +227,7 @@ Vector4d<T> Vector4d<T>::operator-() const {
 template <typename T>
 template <typename U>
 Vector4d<T>::operator Vector4d<U>() const {
-    return std::move(static_cast<const Matrix<U>>(static_cast<const Matrix<T>>(*this)));
+    return std::move(static_cast<const Matrix<U>>(static_cast<const Matrix<T> &>(*this)));
 } 
 
 template <typename T>

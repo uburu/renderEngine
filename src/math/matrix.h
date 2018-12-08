@@ -27,6 +27,11 @@
 #   define UU_MATRIX_COLUMN_GRAINSIZE 16
 #endif // UU_MATRIX_COLUMN_GRAINSIZE 
 
+namespace detail {
+    template <size_t D, typename T>
+    class MatrixSizeAdapter;
+}
+
 enum class MatrixOrder {
     kRowMajor,
     kColumnMajor
@@ -135,6 +140,9 @@ public:
 protected:
     template <typename U>
     friend class Matrix;
+
+    template <size_t D, typename U>
+    friend class detail::MatrixSizeAdapter;
 
     Matrix(size_t rows, size_t columns, size_t data_size, std::shared_ptr<T> elements, MatrixOrder order, bool is_transposed);
 
@@ -272,7 +280,9 @@ is_transposed(other.is_transposed)
 {}
 
 template <typename T>
-Matrix<T>::~Matrix() {}
+Matrix<T>::~Matrix() {
+
+}
 
 
 template <typename T>

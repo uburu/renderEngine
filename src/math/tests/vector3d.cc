@@ -105,3 +105,38 @@ TEST(TestVector3d, TestMap) {
 
     EXPECT_EQ(v_int, c);
 }
+
+TEST(TestVector3d, TestAsMatrix) {
+    Vector3d v(1.1, 1.2, 1.3);
+
+    Matrix vert3 = {
+        { 1.1 }, 
+        { 1.2 },
+        { 1.3 }
+    };
+
+    Matrix horiz3 = {
+        { 1.1, 1.2, 1.3 }
+    };
+
+    EXPECT_EQ(v.AsMatrix(VectorOrientation::kVertical).RawData(), v.RawData());
+    EXPECT_EQ(v.AsMatrix(VectorOrientation::kVertical), vert3);
+    EXPECT_EQ(v.AsMatrix(VectorOrientation::kHorizontal), horiz3);
+
+    Vector4d<double> &v4 = v;
+
+    Matrix vert4 = {
+        { 1.1 }, 
+        { 1.2 },
+        { 1.3 },
+        { 0.0 }
+    };
+
+    Matrix horiz4 = {
+        { 1.1, 1.2, 1.3, 0.0 }
+    };
+
+    EXPECT_EQ(v4.AsMatrix(VectorOrientation::kVertical).RawData(), v4.RawData());
+    EXPECT_EQ(v4.AsMatrix(VectorOrientation::kVertical), vert4);
+    EXPECT_EQ(v4.AsMatrix(VectorOrientation::kHorizontal), horiz4);
+}
