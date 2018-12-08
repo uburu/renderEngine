@@ -20,11 +20,11 @@
 #include <tbb/blocked_range2d.h>
 
 #ifndef UU_MATRIX_ROW_GRAINSIZE
-#   define UU_MATRIX_ROW_GRAINSIZE 16
+#   define UU_MATRIX_ROW_GRAINSIZE 3
 #endif // UU_MATRIX_ROW_GRAINSIZE 
 
 #ifndef UU_MATRIX_COLUMN_GRAINSIZE
-#   define UU_MATRIX_COLUMN_GRAINSIZE 16
+#   define UU_MATRIX_COLUMN_GRAINSIZE 3
 #endif // UU_MATRIX_COLUMN_GRAINSIZE 
 
 namespace detail {
