@@ -242,9 +242,9 @@ bool Vector3d<T>::operator!=(const Vector3d<T> &rhs) const {
 template <typename T>
 Vector3d<T> Vector3d<T>::Cross(const Vector3d<T> &rhs) const {
     return std::move(Vector3d<T>(
-        y()*rhs.z() - z()*rhs.y(),
-        z()*rhs.x() - x()*rhs.z(),
-        x()*rhs.y() - y()*rhs.x()
+        this->y()*rhs.z() - this->z()*rhs.y(),
+        this->z()*rhs.x() - this->x()*rhs.z(),
+        this->x()*rhs.y() - this->y()*rhs.x()
     ));
 }
 
