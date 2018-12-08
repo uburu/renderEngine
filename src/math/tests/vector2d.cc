@@ -1,4 +1,4 @@
-#include "Vector2d.h"
+#include "vector2d.h"
 
 #include <gtest/gtest.h>
 
