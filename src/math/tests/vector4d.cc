@@ -79,6 +79,33 @@ TEST(TestVector4d, TestScalarDiv) {
     EXPECT_EQ(v / 2, r); 
 }
 
+TEST(TestVector4d, TestVectorAdd) {
+    Vector4d a(1, 1, 1, 1);
+    Vector4d b(10, 10, 10, 10);
+    Vector4d r(11, 11, 11, 11);
+
+    Vector4d a_assign(a);
+    a_assign += b;
+
+    EXPECT_EQ(a_assign, r);
+    EXPECT_EQ(a + b, r);
+    EXPECT_EQ(b + a, r);
+}
+
+TEST(TestVector4d, TestVectorSub) {
+    Vector4d a(1, 1, 1, 1);
+    Vector4d b(10, 10, 10, 10);
+    Vector4d r1(-9, -9, -9, -9);
+    Vector4d r2(9, 9, 9, 9);
+
+    Vector4d a_assign(a);
+    a_assign -= b;
+
+    EXPECT_EQ(a_assign, r1);
+    EXPECT_EQ(a - b, r1);
+    EXPECT_EQ(b - a, r2);
+}
+
 TEST(TestVector4d, TestVectorMatrixMul) {
     Matrix m(1, 1, 10);
     Vector4d v(1, 1, 1, 1);

@@ -79,6 +79,33 @@ TEST(TestVector3d, TestScalarDiv) {
     EXPECT_EQ(v / 2, r); 
 }
 
+TEST(TestVector3d, TestVectorAdd) {
+    Vector3d a(1, 1, 1);
+    Vector3d b(10, 10, 10);
+    Vector3d r(11, 11, 11);
+
+    Vector3d a_assign(a);
+    a_assign += b;
+
+    EXPECT_EQ(a_assign, r);
+    EXPECT_EQ(a + b, r);
+    EXPECT_EQ(b + a, r);
+}
+
+TEST(TestVector3d, TestVectorSub) {
+    Vector3d a(1, 1, 1);
+    Vector3d b(10, 10, 10);
+    Vector3d r1(-9, -9, -9);
+    Vector3d r2(9, 9, 9);
+
+    Vector3d a_assign(a);
+    a_assign -= b;
+
+    EXPECT_EQ(a_assign, r1);
+    EXPECT_EQ(a - b, r1);
+    EXPECT_EQ(b - a, r2);
+}
+
 TEST(TestVector3d, TestVectorMatrixMul) {
     Matrix m(1, 1, 10);
     Vector3d v(1, 1, 1);
