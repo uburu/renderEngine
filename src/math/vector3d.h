@@ -54,6 +54,9 @@ public:
 
     Matrix<T> AsMatrix(VectorOrientation) const;
 
+protected:
+    static Vector3d CreateFromMatrix4x1(const Matrix<T> &);
+
 private:
     using MatrixSizeAdapter = detail::MatrixSizeAdapter<3, T>;
 
@@ -252,6 +255,12 @@ Matrix<T> Vector3d<T>::AsMatrix(VectorOrientation orientation) const {
     auto matrix = Vector4d<T>::AsMatrix(orientation);
     MatrixSizeAdapter adapter(matrix, false);
     return std::move(matrix);
+}
+
+template <typename T> 
+Vector3d<T> Vector3d<T>::CreateFromMatrix4x1(const Matrix<T> &other) {
+    MatrixSizeAdapter adapter(other);
+    return std::move(Vector3d<T>(other));
 }
 
 #endif // UBURU_RENDERENGINE_VECTOR3D_H
