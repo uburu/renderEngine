@@ -140,3 +140,15 @@ TEST(TestVector3d, TestAsMatrix) {
     EXPECT_EQ(v4.AsMatrix(VectorOrientation::kVertical), vert4);
     EXPECT_EQ(v4.AsMatrix(VectorOrientation::kHorizontal), horiz4);
 }
+
+TEST(TestVector3d, TestCastToVector4d) {
+    Vector3d a(1.1, 1.2, 1.3);
+    Vector3d b(1.1, 1.2, 1.3);
+
+    Vector4d<double> &v4 = a;
+    Vector4d r(1.1, 1.2, 1.3, 100.);
+    v4.w(100.);
+
+    EXPECT_EQ(a, b);
+    EXPECT_EQ(v4, r);
+}
