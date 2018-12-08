@@ -63,6 +63,7 @@ private:
     Vector2d(const Vector3d<T> &);
     Vector2d(Vector3d<T> &&);
 
+    using Vector3d<T>::Cross;
     using Vector3d<T>::GetZ;
     using Vector3d<T>::SetZ;
     using Vector3d<T>::z;

@@ -95,6 +95,14 @@ TEST(TestVector3d, TestCastOperator) {
     EXPECT_EQ(v_int, static_cast<Vector3d<int>>(v));
 }
 
+TEST(TestVector3d, TestCross) {
+    Vector3d a(10., 0., 45.);
+    Vector3d b(0., 10., 10.);
+    Vector3d r(-450., -100., 100.);
+
+    EXPECT_EQ(a.Cross(b), r);
+}
+
 TEST(TestVector3d, TestMap) {
     Vector3d<double> v(1.2, 2.4, 3.3);
     Vector3d<int> v_int(2, 3, 4);

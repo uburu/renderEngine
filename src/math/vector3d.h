@@ -46,6 +46,8 @@ public:
     bool operator==(const Vector3d<T> &) const;
     bool operator!=(const Vector3d<T> &) const;
 
+    Vector3d<T> Cross(const Vector3d<T> &) const;
+
     template <typename ElementConverter>
     Vector3d<std::invoke_result_t<ElementConverter, std::add_lvalue_reference_t<T>>> 
     Map(ElementConverter) const;
@@ -235,6 +237,15 @@ bool Vector3d<T>::operator==(const Vector3d<T> &rhs) const {
 template <typename T>
 bool Vector3d<T>::operator!=(const Vector3d<T> &rhs) const {
     return !(*this == rhs);
+}
+
+template <typename T>
+Vector3d<T> Vector3d<T>::Cross(const Vector3d<T> &rhs) const {
+    return std::move(Vector3d<T>(
+        y()*rhs.z() - z()*rhs.y(),
+        z()*rhs.x() - x()*rhs.z(),
+        x()*rhs.y() - y()*rhs.x()
+    ));
 }
 
 template <typename T>
