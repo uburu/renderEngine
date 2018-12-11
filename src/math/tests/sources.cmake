@@ -1,0 +1,3 @@
+file(GLOB TEST_${MATH_LIBRARY}_SOURCES
+    "*.cc"
+)
