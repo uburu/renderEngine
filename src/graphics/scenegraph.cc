@@ -7,7 +7,7 @@
 using namespace std::string_literals;
 
 NodeAlreadyInGraphException::NodeAlreadyInGraphException(std::string_view node_id)
-: std::logic_error("Node \""s + node_id + "\" already in graph")
+: std::logic_error("Node \""s + node_id.data() + "\" already in graph")
 {}
 
 SceneGraph::SceneGraph(std::string_view id)
