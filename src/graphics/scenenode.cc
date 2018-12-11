@@ -6,6 +6,10 @@ SceneNode::SceneNode()
 : id("node" + std::to_string(default_id++))
 {}
 
+SceneNode::SceneNode(std::string_view id)
+: id(id)
+{}
+
 SceneNode::~SceneNode() {
 
 }

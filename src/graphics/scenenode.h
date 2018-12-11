@@ -9,6 +9,7 @@ class SceneGraphVisitor;
 class SceneNode {
 public:
     SceneNode();
+    SceneNode(std::string_view id);
     virtual ~SceneNode();
 
     virtual void Accept(SceneGraphVisitor &) = 0;
