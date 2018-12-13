@@ -11,6 +11,8 @@ using Face = std::vector<VertexIndex>;
 
 class Mesh : public SceneNode {
 public:
+    Mesh(std::string_view id);
+
     virtual void Accept(SceneGraphVisitor &) override;
 
     virtual size_t GetVertexCount() const = 0;
