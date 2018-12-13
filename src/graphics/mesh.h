@@ -15,7 +15,7 @@ public:
 
     virtual size_t GetVertexCount() const = 0;
     virtual Vector3d<double> GetVertexPosition(VertexIndex) const = 0; 
-    virtual SetVertexPosition(VertexIndex, const Vector3d<double> &) = 0; 
+    virtual void SetVertexPosition(VertexIndex, const Vector3d<double> &) = 0; 
 
     virtual size_t GetFaceCount() const = 0;
     virtual Face GetFace() const = 0;
