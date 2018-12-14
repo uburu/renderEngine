@@ -299,40 +299,41 @@ void TGAImage::Clear() {
   memset((void *) data, 0, width * height * bytespp);
 }
 
-// bool TGAImage::scale(int w, int h) {
-//   if (w <= 0 || h <= 0 || !data) return false;
-//   unsigned char *tdata = new unsigned char[w * h * bytespp];
-//   int nscanline = 0;
-//   int oscanline = 0;
-//   int erry = 0;
-//   unsigned long nlinebytes = w * bytespp;
-//   unsigned long olinebytes = width * bytespp;
-//   for (int j = 0; j < height; j++) {
-//     int errx = width - w;
-//     int nx = -bytespp;
-//     int ox = -bytespp;
-//     for (int i = 0; i < width; i++) {
-//       ox += bytespp;
-//       errx += w;
-//       while (errx >= (int) width) {
-//         errx -= width;
-//         nx += bytespp;
-//         memcpy(tdata + nscanline + nx, data + oscanline + ox, bytespp);
-//       }
-//     }
-//     erry += h;
-//     oscanline += olinebytes;
-//     while (erry >= (int) height) {
-//       if (erry >= (int) height << 1) // it means we jump over a scanline
-//         memcpy(tdata + nscanline + nlinebytes, tdata + nscanline, nlinebytes);
-//       erry -= height;
-//       nscanline += nlinebytes;
-//     }
-//   }
-//   delete[] data;
-//   data = tdata;
-//   width = w;
-//   height = h;
-//   return true;
-// }
+void TGAImage::Scale(int w, int h) {
+    if(data == nullptr) throw std::runtime_error("No data in TGA image");
+
+    assert(w > 0 && h > 0 && "Invalid TGA image scale");
+    unsigned char *tdata = new unsigned char[w * h * bytespp];
+    int nscanline = 0;
+    int oscanline = 0;
+    int erry = 0;
+    unsigned long nlinebytes = w * bytespp;
+    unsigned long olinebytes = width * bytespp;
+    for (int j = 0; j < height; j++) {
+      int errx = width - w;
+      int nx = -bytespp;
+      int ox = -bytespp;
+      for (int i = 0; i < width; i++) {
+        ox += bytespp;
+        errx += w;
+        while (errx >= (int) width) {
+          errx -= width;
+          nx += bytespp;
+          memcpy(tdata + nscanline + nx, data + oscanline + ox, bytespp);
+        }
+      }
+      erry += h;
+      oscanline += olinebytes;
+      while (erry >= (int) height) {
+        if (erry >= (int) height << 1) // it means we jump over a scanline
+          memcpy(tdata + nscanline + nlinebytes, tdata + nscanline, nlinebytes);
+        erry -= height;
+        nscanline += nlinebytes;
+      }
+    }
+    delete[] data;
+    data = tdata;
+    width = w;
+    height = h;
+}
 
