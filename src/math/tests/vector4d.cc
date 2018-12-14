@@ -238,3 +238,14 @@ TEST(TestVector4d, TestAt) {
     EXPECT_EQ(v.At(2), 3);
     EXPECT_EQ(v.At(3), 4);
 }
+
+TEST(TestVector4d, TestRound) {
+    Vector4d v(1.24, 2.01, 3.42, 4.55);
+    Vector4d v_rounded(v);
+    Vector4d r(1., 2., 3., 5.);
+
+    v_rounded.Round();
+
+    EXPECT_EQ(v_rounded, r);
+    EXPECT_EQ(v.Rounded(), r);
+}

@@ -195,3 +195,14 @@ TEST(TestVector3d, TestAt) {
     EXPECT_EQ(v.At(1), 2);
     EXPECT_EQ(v.At(2), 3);
 }
+
+TEST(TestVector3d, TestRound) {
+    Vector3d v(1.24, 2.01, 3.55);
+    Vector3d v_rounded(v);
+    Vector3d r(1., 2., 4.);
+
+    v_rounded.Round();
+
+    EXPECT_EQ(v_rounded, r);
+    EXPECT_EQ(v.Rounded(), r);
+}

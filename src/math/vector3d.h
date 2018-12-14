@@ -46,6 +46,9 @@ public:
     bool operator==(const Vector3d<T> &) const;
     bool operator!=(const Vector3d<T> &) const;
 
+    template <typename U = T>
+    Vector3d<U> Rounded() const;
+
     T &At(size_t i);
     const T &At(size_t i) const;
 
@@ -242,6 +245,15 @@ bool Vector3d<T>::operator==(const Vector3d<T> &rhs) const {
 template <typename T>
 bool Vector3d<T>::operator!=(const Vector3d<T> &rhs) const {
     return !(*this == rhs);
+}
+
+template <typename T>
+template <typename U>
+Vector3d<U> Vector3d<T>::Rounded() const {
+    return Map([this](auto &element) {
+        if(element < 0) return static_cast<U>(std::ceil(element - 0.5));
+        else return static_cast<U>(std::floor(element + 0.5));
+    });
 }
 
 template <typename T>

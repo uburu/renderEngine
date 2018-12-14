@@ -50,6 +50,9 @@ public:
     Vector2d<std::invoke_result_t<ElementConverter, std::add_lvalue_reference_t<T>>> 
     Map(ElementConverter) const;
 
+    template <typename U = T>
+    Vector2d<U> Rounded() const;
+
     T &At(size_t i);
     const T &At(size_t i) const;
 
@@ -247,6 +250,16 @@ Vector2d<T>::Map(ElementConverter converter) const {
     MatrixSizeAdapter adapter(*this);
     return std::move(Matrix<T>::Map(converter));
 }
+
+template <typename T>
+template <typename U>
+Vector2d<U> Vector2d<T>::Rounded() const {
+    return Map([this](auto &element) {
+        if(element < 0) return static_cast<U>(std::ceil(element - 0.5));
+        else return static_cast<U>(std::floor(element + 0.5));
+    });
+}
+
 
 template <typename T>
 T &Vector2d<T>::At(size_t i) {

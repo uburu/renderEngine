@@ -201,3 +201,14 @@ TEST(TestVector2d, TestAt) {
     EXPECT_EQ(v.At(0), 1);
     EXPECT_EQ(v.At(1), 2);
 }
+
+TEST(TestVector2d, TestRound) {
+    Vector2d v(1.24, 2.55);
+    Vector2d v_rounded(v);
+    Vector2d r(1., 3.);
+
+    v_rounded.Round();
+
+    EXPECT_EQ(v_rounded, r);
+    EXPECT_EQ(v.Rounded(), r);
+}
