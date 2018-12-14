@@ -3,7 +3,7 @@
 #include <gtest/gtest.h>
 
 TEST(ObjMesh, BasicTests) {
-  auto objMesh = ObjMesh::LoadFromFile("1", "resources/triangle.obj");
+  auto objMesh = ObjMesh::LoadFromFile("1", CMAKE_SOURCE_DIR "/src/graphics/tests/resources/triangle.obj");
   Face face = {0, 1, 2};
 
   EXPECT_EQ(objMesh->GetVertexCount(), 3);
