@@ -50,6 +50,8 @@ public:
     Vector2d<std::invoke_result_t<ElementConverter, std::add_lvalue_reference_t<T>>> 
     Map(ElementConverter) const;
 
+    Vector2d Normalized() const;
+
     Vector2d Share() const;
 
     Matrix<T> AsMatrix(VectorOrientation) const;
@@ -241,6 +243,14 @@ Vector2d<std::invoke_result_t<ElementConverter, std::add_lvalue_reference_t<T>>>
 Vector2d<T>::Map(ElementConverter converter) const {
     MatrixSizeAdapter adapter(*this);
     return std::move(Matrix<T>::Map(converter));
+}
+
+template <typename T>
+Vector2d<T> Vector2d<T>::Normalized() const {
+    Vector2d copy(*this);
+    copy.Normalize();
+
+    return copy;
 }
 
 template <typename T>

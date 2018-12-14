@@ -52,6 +52,8 @@ public:
     Vector3d<std::invoke_result_t<ElementConverter, std::add_lvalue_reference_t<T>>> 
     Map(ElementConverter) const;
 
+    Vector3d Normalized() const;
+
     Vector3d Share() const;
 
     Matrix<T> AsMatrix(VectorOrientation) const;
@@ -254,6 +256,14 @@ Vector3d<std::invoke_result_t<ElementConverter, std::add_lvalue_reference_t<T>>>
 Vector3d<T>::Map(ElementConverter converter) const {
     MatrixSizeAdapter adapter(*this);
     return std::move(Matrix<T>::Map(converter));
+}
+
+template <typename T>
+Vector3d<T> Vector3d<T>::Normalized() const {
+    Vector3d copy(*this);
+    copy.Normalize();
+
+    return copy;
 }
 
 template <typename T>
