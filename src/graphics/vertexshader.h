@@ -5,6 +5,7 @@
 #include "math/matrix4x4.h"
 
 class VertexShader : public Shader {
+public:
     VertexShader(
         const Matrix4x4<> &viewport, 
         const Matrix4x4<> &projection, 

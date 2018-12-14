@@ -1,8 +1,9 @@
 #ifndef UBURU_RENDERENGINE_SHADER_H
 #define UBURU_RENDERENGINE_SHADER_H
 
-#include "math/Vector4d.h"
-#include "math/Color.h"
+#include "math/vector4d.h"
+#include "math/vector3d.h"
+#include "math/color.h"
 
 class Shader {
 public:
