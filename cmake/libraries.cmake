@@ -18,3 +18,6 @@ set(TEST_LIBRARIES
     gtest${crt_type}
     gmock${crt_type}
 )
+
+set(${CG_LIBRARY}_LIBRARIES
+        tbb${cty_type_long})
