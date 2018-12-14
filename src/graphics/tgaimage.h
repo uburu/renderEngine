@@ -55,8 +55,8 @@ class TGAImage {
   void FlipVertically();
   void Scale(int kw, int kh);
 
-  Color<unsigned char> GetPixel(int x, int y) const;
-  void SetPixel(int x, int y, const Color<unsigned char> c);
+  Color<> GetPixel(int x, int y) const;
+  void SetPixel(int x, int y, const Color<> &c);
 
   int GetWidth() const;
   int GetHeight() const;
@@ -73,9 +73,8 @@ class TGAImage {
   int height;
   int bytespp;
 
-//  bool LoadDataRLE(std::ifstream &in);
-//  bool UnloadDataRLE(std::ofstream &out);
-};
+ bool LoadDataRLE(std::ifstream &in);
+ bool UnloadDataRLE(std::ofstream &out);
 
 };
 
