@@ -45,7 +45,7 @@ void CanvasTGA::DrawLine(Vector3d<int> point1, Vector3d<int> point2, const Color
     error2 += derror2;
 
     if (error2 > dx) {
-      y += (y1 > y0 ? 1 : -1);
+      y += (point2.y() > point1.y() ? 1 : -1);
       error2 -= dx * 2;
     }
   }
