@@ -46,6 +46,9 @@ public:
     bool operator==(const Vector3d<T> &) const;
     bool operator!=(const Vector3d<T> &) const;
 
+    T &At(size_t i);
+    const T &At(size_t i) const;
+
     Vector3d<T> Cross(const Vector3d<T> &) const;
 
     template <typename ElementConverter>
@@ -239,6 +242,17 @@ bool Vector3d<T>::operator==(const Vector3d<T> &rhs) const {
 template <typename T>
 bool Vector3d<T>::operator!=(const Vector3d<T> &rhs) const {
     return !(*this == rhs);
+}
+
+template <typename T>
+T &Vector3d<T>::At(size_t i) {
+    MatrixSizeAdapter adapter(*this);
+    return Vector4d<T>::At(i);
+}
+
+template <typename T>
+const T &Vector3d<T>::At(size_t i) const {
+    return const_cast<Vector3d<T>*>(this)->At(i);
 }
 
 template <typename T>

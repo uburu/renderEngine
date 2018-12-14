@@ -194,3 +194,10 @@ TEST(TestVector2d, TestCastToVector3d) {
     EXPECT_EQ(a, b);
     EXPECT_EQ(v3, r);
 }
+
+TEST(TestVector2d, TestAt) {
+    Vector2d v(1, 2);
+
+    EXPECT_EQ(v.At(0), 1);
+    EXPECT_EQ(v.At(1), 2);
+}

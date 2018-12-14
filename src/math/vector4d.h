@@ -53,6 +53,9 @@ public:
     Vector4d<std::invoke_result_t<ElementConverter, std::add_lvalue_reference_t<T>>> 
     Map(ElementConverter) const;
 
+    T &At(size_t i);
+    const T &At(size_t i) const;
+
     T GetX() const;
     T GetY() const;
     T GetZ() const;
@@ -237,6 +240,15 @@ Vector4d<T>::Map(ElementConverter converter) const {
     return std::move(Matrix<T>::Map(converter));
 }
 
+template <typename T>
+T &Vector4d<T>::At(size_t i) {
+    return Matrix<T>::At(i, 0);
+}
+
+template <typename T>
+const T &Vector4d<T>::At(size_t i) const {
+    return const_cast<Vector4d<T>*>(this)->At(i);
+}
 
 template <typename T>
 T Vector4d<T>::GetX() const {

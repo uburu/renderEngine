@@ -50,6 +50,9 @@ public:
     Vector2d<std::invoke_result_t<ElementConverter, std::add_lvalue_reference_t<T>>> 
     Map(ElementConverter) const;
 
+    T &At(size_t i);
+    const T &At(size_t i) const;
+
     Vector2d Normalized() const;
 
     Vector2d Share() const;
@@ -243,6 +246,17 @@ Vector2d<std::invoke_result_t<ElementConverter, std::add_lvalue_reference_t<T>>>
 Vector2d<T>::Map(ElementConverter converter) const {
     MatrixSizeAdapter adapter(*this);
     return std::move(Matrix<T>::Map(converter));
+}
+
+template <typename T>
+T &Vector2d<T>::At(size_t i) {
+    MatrixSizeAdapter adapter(*this);
+    return Vector3d<T>::At(i);
+}
+
+template <typename T>
+const T &Vector2d<T>::At(size_t i) const {
+    return const_cast<Vector2d<T>*>(this)->At(i);
 }
 
 template <typename T>

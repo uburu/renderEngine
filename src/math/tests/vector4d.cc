@@ -229,3 +229,12 @@ TEST(TestVector4d, TestAsMatrix) {
     EXPECT_EQ(v.AsMatrix(VectorOrientation::kVertical), vert);
     EXPECT_EQ(v.AsMatrix(VectorOrientation::kHorizontal), horiz);
 }
+
+TEST(TestVector4d, TestAt) {
+    Vector4d v(1, 2, 3, 4);
+
+    EXPECT_EQ(v.At(0), 1);
+    EXPECT_EQ(v.At(1), 2);
+    EXPECT_EQ(v.At(2), 3);
+    EXPECT_EQ(v.At(3), 4);
+}
