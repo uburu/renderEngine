@@ -1,15 +1,12 @@
-//
-// Created by Иван Морозов on 14.12.2018.
-//
-
 #include "canvas.h"
 
-Canvas::Canvas(size_t width, size_t height) 
-: width(width), height(height)
-{}
+Canvas::Canvas(int width, int height)
+    : width(width), height(height), depth_buffer(width * height) {}
 
 Canvas::~Canvas() {}
 
 void Canvas::InitializeDepthBuffer() {
-    // TODO:
+  for (int i = 0; i < width * height; ++i) {
+    depth_buffer.push_back(kDepthBufferNoValue);
+  }
 }

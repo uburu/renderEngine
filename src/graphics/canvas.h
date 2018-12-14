@@ -5,26 +5,31 @@
 #ifndef UBURURENDERENGINE_CANVAS_H
 #define UBURURENDERENGINE_CANVAS_H
 
+#include <vector>
 #include "math/vector3d.h"
+#include "math/color.h"
+
+using DepthBuffer = std::vector<int>;
+constexpr int kDepthBufferNoValue = std::numeric_limits<int>::min();
 
 class Shader;
 
 class Canvas {
  public:
-  Canvas(size_t width, size_t height);
+  Canvas(int width, int height);
 
   virtual ~Canvas();
 
-  virtual void DrawPoint(const Shader &, const Vector3d<int> &) = 0;
-  virtual void DrawLine(const Shader &, const Vector3d<int> &, const Vector3d<int> &) = 0;
-  virtual void DrawFace(const Shader &, const Vector3d<int> &, const Vector3d<int> &, const Vector3d<int> &) = 0;
+  virtual void DrawPoint(const Vector3d<int> &, const Color<> &) = 0;
+  virtual void DrawLine(Vector3d<int> , Vector3d<int> , const Color<> &) = 0;
+  virtual void DrawFace(const Shader &, Vector3d<int> , Vector3d<int> , Vector3d<int> ) = 0;
   virtual void Flush() = 0;
 
  protected:
   virtual void InitializeDepthBuffer();
 
-  size_t width, height;
-  // DepthBuffer depth_buffer;
+  int width, height;
+  DepthBuffer depth_buffer;
 };
 
 #endif //UBURURENDERENGINE_CANVAS_H
