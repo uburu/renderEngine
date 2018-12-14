@@ -41,85 +41,85 @@ public:
 
 template <typename T>
 T Color<T>::GetRed() const {
-    return x();
+    return this->x();
 }
 
 template <typename T>
 T Color<T>::GetGreen() const {
-    return y();    
+    return this->y();    
 }
 
 template <typename T>
 T Color<T>::GetBlue() const {
-    return z();
+    return this->z();
 }
 
 template <typename T>
 T Color<T>::GetAlpha() const {
-    return w();
+    return this->w();
 }
 
 
 template <typename T>
 void Color<T>::GetRed(T r) {
-    SetX(r);
+    this->SetX(r);
 }
 
 template <typename T>
 void Color<T>::GetGreen(T g) {
-    SetY(g);
+    this->SetY(g);
 }
 
 template <typename T>
 void Color<T>::GetBlue(T b) {
-    SetZ(b);
+    this->SetZ(b);
 }
 
 template <typename T>
 void Color<T>::GetAlpha(T a) {
-    SetW(a);
+    this->SetW(a);
 }
 
 
 template <typename T>
 const T &Color<T>::r() const {
-    return x();
+    return this->x();
 }
 
 template <typename T>
 const T &Color<T>::g() const {
-    return y();
+    return this->y();
 }
 
 template <typename T>
 const T &Color<T>::b() const {
-    return z();
+    return this->z();
 }
 
 template <typename T>
 const T &Color<T>::a() const {
-    return w();
+    return this->w();
 }
 
 
 template <typename T>
 T &Color<T>::r() {
-    return x();
+    return this->x();
 }
 
 template <typename T>
 T &Color<T>::g() {
-    return y();
+    return this->y();
 }
 
 template <typename T>
 T &Color<T>::b() {
-    return z();
+    return this->z();
 }
 
 template <typename T>
 T &Color<T>::a() {
-    return w();
+    return this->w();
 }
 
 

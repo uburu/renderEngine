@@ -5,7 +5,7 @@
 #ifndef UBURURENDERENGINE_CANVAS_H
 #define UBURURENDERENGINE_CANVAS_H
 
-#include "math/Vector3d.h"
+#include "math/vector3d.h"
 
 class Shader;
 

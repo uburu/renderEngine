@@ -31,45 +31,45 @@ public:
 
 template <typename T>
 T VectorUV<T>::GetU() const {
-    return x();
+    return this->x();
 }
 
 template <typename T>
 T VectorUV<T>::GetV() const {
-    return y();
+    return this->y();
 }
 
 
 template <typename T>
 void VectorUV<T>::SetU(T u) {
-    SetX(u);
+    this->SetX(u);
 }
 
 template <typename T>
 void VectorUV<T>::SetV(T v) {
-    SetY(v);
+    this->SetY(v);
 }
 
 
 template <typename T>
 const T &VectorUV<T>::u() const {
-    return x();
+    return this->x();
 }
 
 template <typename T>
 const T &VectorUV<T>::v() const {
-    return y();
+    return this->y();
 }
 
 
 template <typename T>
 T &VectorUV<T>::u() {
-    return x();
+    return this->x();
 }
 
 template <typename T>
 T &VectorUV<T>::v() {
-    return y();
+    return this->y();
 }
 
 
