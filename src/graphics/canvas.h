@@ -5,6 +5,10 @@
 #ifndef UBURURENDERENGINE_CANVAS_H
 #define UBURURENDERENGINE_CANVAS_H
 
+#include "math/Vector3d.h"
+
+class Shader;
+
 class Canvas {
  public:
   Canvas(size_t width, size_t height);
@@ -20,7 +24,7 @@ class Canvas {
   virtual void InitializeDepthBuffer();
 
   size_t width, height;
-  DepthBuffer depth_buffer;
+  // DepthBuffer depth_buffer;
 };
 
 #endif //UBURURENDERENGINE_CANVAS_H
