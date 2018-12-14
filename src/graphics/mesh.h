@@ -7,7 +7,9 @@
 #include "math/vector3d.h"
 
 using VertexIndex = size_t;
+using FaceIndex = size_t;
 using Face = std::vector<VertexIndex>;
+
 
 class Mesh : public SceneNode {
 public:
@@ -20,7 +22,7 @@ public:
     virtual void SetVertexPosition(VertexIndex, const Vector3d<double> &) = 0; 
 
     virtual size_t GetFaceCount() const = 0;
-    virtual Face GetFace() const = 0;
+    virtual Face GetFace(FaceIndex) const = 0;
 };
 
 #endif // UBURU_RENDERENGINE_MESH_H
