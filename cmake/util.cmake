@@ -24,7 +24,7 @@ endmacro()
 macro(add_gtest test_name)
     add_executable(test-${test_name} ${CMAKE_SOURCE_DIR}/src/global/default_tests_main.cc ${TEST_${test_name}_SOURCES})
     target_compile_options(test-${test_name} BEFORE PRIVATE "${${test_name}_COMPILE_OPTIONS}")
-    target_link_libraries(test-${test_name} ${${test_name}_LIBRARIES} ${TEST_LIBRARIES})
+    target_link_libraries(test-${test_name} ${${test_name}_LIBRARIES} ${TEST_LIBRARIES} ${ARGN})
 
     copy_target_dlls(test-${test_name})
 endmacro()
