@@ -43,7 +43,7 @@ class TGAImage {
   };
 
   TGAImage();
-  TGAImage(int width, int height, int bpp);
+  TGAImage(int width, int height, int bpp = kRGBA);
   TGAImage(const TGAImage &);
   TGAImage(TGAImage &&);
   ~TGAImage();
