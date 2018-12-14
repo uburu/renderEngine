@@ -14,10 +14,12 @@ set(${MATH_LIBRARY}_LIBRARIES
     tbb${cty_type_long}
 )
 
+set(${CG_LIBRARY}_LIBRARIES
+    ${MATH_LIBRARY}
+    ${${MATH_LIBRARY}_LIBRARIES}
+)
+
 set(TEST_LIBRARIES
     gtest${crt_type}
     gmock${crt_type}
 )
-
-set(${CG_LIBRARY}_LIBRARIES
-        tbb${cty_type_long})
