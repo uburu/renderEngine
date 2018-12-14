@@ -3,7 +3,7 @@
 
 #include "vector4d.h"
 
-template <typename T = double>
+template <typename T = unsigned char>
 class Color : public Vector4d<T> {
 public:
     using Vector4d<T>::Vector4d;
@@ -124,25 +124,25 @@ T &Color<T>::a() {
 
 
 template <typename T>
-Color &Color<T>::r(T r) {
+Color<T> &Color<T>::r(T r) {
     SetX(r);
     return *this;
 }
 
 template <typename T>
-Color &Color<T>::g(T g) {
+Color<T> &Color<T>::g(T g) {
     SetY(g);
     return *this;
 }
 
 template <typename T>
-Color &Color<T>::b(T b) {
+Color<T> &Color<T>::b(T b) {
     SetZ(b);
     return *this;
 }
 
 template <typename T>
-Color &Color<T>::a(T a) {
+Color<T> &Color<T>::a(T a) {
     SetW(a);
     return *this;
 }
