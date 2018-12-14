@@ -484,8 +484,13 @@ TEST(TestMatrix, TestRound) {
         {1., 3.}
     };
 
+    Matrix<int> r_int {
+        { 1, 3 }
+    };
+
     EXPECT_EQ(rounded, r);
     EXPECT_EQ(m.Rounded(), r);
+    EXPECT_EQ(m.Rounded<int>(), r_int);
 }
 
 TEST(TestMatrix, TestTranspose) {

@@ -107,7 +107,9 @@ public:
     T &At(size_t i, size_t j);
 
     void Round();
-    Matrix Rounded() const;
+
+    template <typename U = T>
+    Matrix<U> Rounded() const;
 
     void Transpose();
     Matrix Transposed() const;
@@ -686,11 +688,12 @@ void Matrix<T>::Round() {
 }
 
 template <typename T>
-Matrix<T> Matrix<T>::Rounded() const {
-    Matrix copy(*this);
-    copy.Round();
-
-    return copy;
+template <typename U>
+Matrix<U> Matrix<T>::Rounded() const {
+    return Map([this](auto &element) {
+        if(element < 0) return static_cast<U>(std::ceil(element - 0.5));
+        else return static_cast<U>(std::floor(element + 0.5));
+    });
 }
 
 template <typename T>
