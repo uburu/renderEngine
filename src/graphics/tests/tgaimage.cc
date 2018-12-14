@@ -48,7 +48,7 @@ TEST(TestTGAImage, TestLoadWrite) {
 TEST(TestTGAImage, TestRedSquare) {
     TGAImage image(1024, 1024, TGAImage::kRGBA);
 
-    for(size_t i = 0, j = 0; i < 1024; ++i) {
+    for(int i = 0, j = 0; i < 1024; ++i) {
         for(j = 0; j < 1024; ++j) {
             if(i < 512 && j < 512) image.SetPixel(i, j, Color<>(255, 0, 0, 255));
             else if(i < 512 && j >= 512) image.SetPixel(i, j, Color<>(0, 255, 0, 255));
