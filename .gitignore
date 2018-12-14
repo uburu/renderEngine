@@ -3,3 +3,6 @@ build
 
 # Visual Studio Code
 .vscode
+.idea
+.DS_Store
+cmake-build-debug
