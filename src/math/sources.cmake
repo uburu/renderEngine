@@ -1,4 +1,4 @@
-SET(${MATH_LIBRARY}_SOURCES
+file(GLOB ${MATH_LIBRARY}_SOURCES
     "*.h"
     "*.cc"
 )
