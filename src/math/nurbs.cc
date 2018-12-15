@@ -1,5 +1,8 @@
 #include "nurbs.h"
 
+using KnotVector         = std::vector<int>;
+using RationalBasis      = std::vector<double>;
+
 KnotVector Knot(unsigned int n, int c) {
 
     int max_value = n + c; // Maximum value of the knor vector
@@ -15,12 +18,13 @@ KnotVector Knot(unsigned int n, int c) {
     return x;
 }
 
-RationalBasis RationalBasisFunctions(
+void RationalBasisFunctions(
     int c, 
     double t,
     int npts, 
     const KnotVector &x,
-    const HomogeneousWeights &h
+    const HomogeneousWeights &h,
+    RationalBasis &r
 ) {
     int nplusc = npts + c;
     std::vector<double> temp(nplusc, 0);
@@ -35,17 +39,17 @@ RationalBasis RationalBasisFunctions(
     // Calculate the higher order nonrational basis functions
     double d = 0, e = 0;
     for(int k = 2; k <= c; ++k) {
-        for(i = 1; i <= nplusc - k; ++i) {
+        for(i = 0; i < nplusc - k; ++i) {
 
             // If the lower order basis function is zero skip the calculation
-            if(temp[i-1] != 0) d = ((t-x[i-1])*temp[i-1])/(x[i+k-1-1]-x[i-1]);
+            if(temp[i] != 0) d = ((t-x[i])*temp[i])/(x[i+k-1]-x[i]);
             else d = 0;
 
             // if the lower order basis function is zero skip the calculation
-            if(temp[i+1-1] != 0) e = ((x[i+k-1]-t)*temp[i+1-1])/(x[i+k-1]-x[i+1-1]);
+            if(temp[i+1] != 0) e = ((x[i+k]-t)*temp[i+1])/(x[i+k]-x[i+1]);
             else e = 0;
 
-            temp[i-1] = d + e;
+            temp[i] = d + e;
         }
     }
 
@@ -55,13 +59,10 @@ RationalBasis RationalBasisFunctions(
     double sum = 0;
     for(i = 0; i < npts; ++i) sum += temp[i]*h[i]; //???
 
-    RationalBasis r(npts, 0);
     for(i = 0; i < npts; ++i) {
         if(sum != 0) r[i] = (temp[i]*h[i])/sum;
         else r[i] = 0;
     }
-
-    return r;
 }
 
 Curve RBSpline( 
@@ -84,10 +85,12 @@ Curve RBSpline(
     Curve p(p1);
     int i = 0, j = 0, icount = 0, jcount = 0;
     double temp = 0;
+
+    RationalBasis nbasis(npts, 0);
     for(int i1 = 0; i1 < p1; ++i1) {
         if(static_cast<double>(x[nplusc]) - t < kEps) t = static_cast<double>(x[nplusc]);
 
-        auto nbasis = RationalBasisFunctions(k, t, npts, x, h);
+        RationalBasisFunctions(k, t, npts, x, h, nbasis);
         for(j = 0; j < 3; ++j) {
             jcount = 0;//j;
             p[icount].At(j) = 0;

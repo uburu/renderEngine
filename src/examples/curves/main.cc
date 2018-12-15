@@ -20,7 +20,9 @@ int main() {
     for(auto &&point : control_points) canvas.DrawPoint(point.Rounded<int>(), control_point_color);
 
     HomogeneousWeights weights(control_points.size(), 1.0);
-    weights[3] = 3.0; // VARY
+    weights[1] = 6; // VARY
+    weights[2] = 4; // VARY
+    weights[3] = 1; // VARY
 
     auto curve = RBSpline(3, 100, control_points, weights);
 
