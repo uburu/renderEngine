@@ -62,9 +62,10 @@ public:
 
     Matrix<T> AsMatrix(VectorOrientation) const;
 
-private:
+protected:
     using MatrixSizeAdapter = detail::MatrixSizeAdapter<2, T>;
 
+private:
     template <typename U>
     friend class Vector2d;
 

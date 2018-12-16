@@ -10,10 +10,12 @@ public:
 
     virtual Vector4d<> Vertex(FaceIndex, size_t vertex_number_in_face) override;
 
-    virtual bool Fragment(const Vector3d<> &bar, const Color<> &) override;
+    virtual bool Fragment(const Vector3d<> &bar, Color<> &) override;
 
 private:
+    Matrix<> varying_uv;
     Matrix<> varying_tri;
+    Matrix<> varying_nrm;
     Matrix<> ndc_tri;
 
     Vector3d<> light_dir;

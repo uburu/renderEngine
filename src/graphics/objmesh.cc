@@ -9,12 +9,15 @@ ObjMesh::ObjMesh(
     const std::vector<Vector3d<double>> &vertices, 
     const std::vector<Vector3d<double>> &normals, 
     const std::vector<VectorUV<double>> &uvs,
-    const std::vector<Face> &faces
+    const std::vector<Face> &faces,
+    std::shared_ptr<TGAImage> diffuse_map
 ) : Mesh(id),
   _vertex_positions(vertices),
   _normals(normals),
   _uvs(uvs),
-  _faces(faces) {}
+  _faces(faces),
+  _diffuse_map(diffuse_map)
+{}
 
 ObjMesh::ObjMesh(std::string_view id, std::vector<Vector3d<double>> &&vertex_positions, std::vector<Face> &&faces)
     : Mesh(id),
@@ -33,6 +36,10 @@ void ObjMesh::SetVertexPosition(VertexIndex index, const Vector3d<double> &verte
   _vertex_positions[index] = vertex_position;
 }
 
+VectorUV<> ObjMesh::GetVertexUV(VertexIndex index) const {
+  return _uvs[index];
+}
+
 Vector3d<> ObjMesh::GetVertexNormal(VertexIndex index) const {
     return _normals[index];
 }
@@ -43,6 +50,10 @@ size_t ObjMesh::GetFaceCount() const {
 
 Face ObjMesh::GetFace(FaceIndex index) const {
   return _faces[index];
+}
+
+std::shared_ptr<TGAImage> ObjMesh::GetDiffuseMap() const {
+  return _diffuse_map;
 }
 
 std::shared_ptr<ObjMesh> ObjMesh::LoadFromFile(std::string_view id, std::string_view path) {
@@ -95,5 +106,15 @@ std::shared_ptr<ObjMesh> ObjMesh::LoadFromFile(std::string_view id, std::string_
     }
   }
 
-  return std::make_shared<ObjMesh>(id, std::move(vertex_positions), std::move(normals), std::move(uvs), std::move(faces));
+  std::string base_name = path.data();
+  base_name = base_name.substr(0, base_name.find_last_of('.'));
+
+  return std::make_shared<ObjMesh>(
+    id, 
+    std::move(vertex_positions), 
+    std::move(normals), 
+    std::move(uvs), 
+    std::move(faces),
+    TGAImage::LoadFromFile(base_name + "_diffuse.tga")
+  );
 }

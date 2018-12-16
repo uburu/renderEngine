@@ -14,7 +14,7 @@ public:
 
     virtual Vector4d<> Vertex(FaceIndex, VertexIndex) = 0;
 
-    virtual bool Fragment(const Vector3d<> &bar, const Color<> &) = 0;
+    virtual bool Fragment(const Vector3d<> &bar, Color<> &) = 0;
 
 protected:
     std::shared_ptr<Mesh> mesh;

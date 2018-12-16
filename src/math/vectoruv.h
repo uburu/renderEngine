@@ -8,6 +8,13 @@ class VectorUV : public Vector2d<T> {
 public:
     using Vector2d<T>::Vector2d;
 
+    template <typename U = T>
+    VectorUV<U> Rounded() const;
+
+    template <typename ElementConverter>
+    VectorUV<std::invoke_result_t<ElementConverter, std::add_lvalue_reference_t<T>>> 
+    Map(ElementConverter) const;
+
     T GetU() const;
     T GetV() const;
 
@@ -28,6 +35,24 @@ public:
 
 
 /* IMPLEMENTATION */
+
+template <typename T>
+template <typename U>
+VectorUV<U> VectorUV<T>::Rounded() const {
+    return Map([this](auto &element) {
+        if(element < 0) return static_cast<U>(std::ceil(element - 0.5));
+        else return static_cast<U>(std::floor(element + 0.5));
+    });
+}
+
+template <typename T>
+template <typename ElementConverter>
+VectorUV<std::invoke_result_t<ElementConverter, std::add_lvalue_reference_t<T>>> 
+VectorUV<T>::Map(ElementConverter converter) const {
+    Vector2d<T>::MatrixSizeAdapter adapter(*this);
+    return std::move(Matrix<T>::Map(converter));
+}
+
 
 template <typename T>
 T VectorUV<T>::GetU() const {
