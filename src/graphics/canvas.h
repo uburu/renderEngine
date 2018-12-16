@@ -23,7 +23,7 @@ class Canvas {
   virtual void DrawPoint(const Vector3d<int> &, const Color<> &) = 0;
   virtual void DrawLine(Vector3d<int>, Vector3d<int>, const Color<> &) = 0;
   virtual void DrawFace(Vector3d<int>, Vector3d<int>, Vector3d<int> ) = 0;
-  virtual void DrawFace(Shader &shader, const Matrix<> &pts, double depth) = 0;
+  virtual void DrawFace(Shader &shader, const Matrix<> &pts, const Vector3d<> &depth) = 0;
   virtual void Flush() = 0;
 
  protected:

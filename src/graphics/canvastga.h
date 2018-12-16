@@ -15,7 +15,7 @@ class CanvasTGA : public Canvas {
   virtual void DrawPoint(const Vector3d<int> &, const Color<> &) override;
   virtual void DrawLine(Vector3d<int>, Vector3d<int>, const Color<> &) override;
   virtual void DrawFace(Vector3d<int>, Vector3d<int>, Vector3d<int> ) override;
-  virtual void DrawFace(Shader &shader, const Matrix<> &pts, double depth) override;
+  virtual void DrawFace(Shader &shader, const Matrix<> &pts, const Vector3d<> &depth) override;
   virtual void Flush() override;
 
  private:

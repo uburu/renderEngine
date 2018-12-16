@@ -90,7 +90,7 @@ void CanvasTGA::DrawFace(Vector3d<int> point1,
   }
 }
 
-void CanvasTGA::DrawFace(Shader &shader, const Matrix<> &pts, double depth) {
+void CanvasTGA::DrawFace(Shader &shader, const Matrix<> &pts, const Vector3d<> &depth) {
     Matrix<> pts2(3, 2);
     for(size_t i = 0; i < 3; ++i) { 
       pts2.At(i, 0) = pts.At(i, 0) / pts.At(i, 3);
@@ -126,10 +126,11 @@ void CanvasTGA::DrawFace(Shader &shader, const Matrix<> &pts, double depth) {
             bc_clip = Vector3d(bc_screen.x() / pts.At(0, 3), bc_screen.y() / pts.At(1, 3), bc_screen.z() / pts.At(2, 3));
             bc_clip /= (bc_clip.x() + bc_clip.y() + bc_clip.z());
 
-            if(bc_screen.x() < 0. || bc_screen.y() < 0. || bc_screen.z() < 0. || depth_buffer[static_cast<size_t>(P.x()*P.y()*screen_width)] > depth) continue;
+            double frag_depth = depth.Dot(bc_clip);
+            if(bc_screen.x() < 0. || bc_screen.y() < 0. || bc_screen.z() < 0. || depth_buffer[static_cast<size_t>(P.x()*P.y()*screen_width)] > frag_depth) continue;
 
             if(!shader.Fragment(bc_clip, color)) {
-              depth_buffer[static_cast<size_t>(P.x()+P.y()*screen_width)] = depth;
+              depth_buffer[static_cast<size_t>(P.x()+P.y()*screen_width)] = frag_depth;
               _image->SetPixel(static_cast<int>(P.x()), static_cast<int>(P.y()), color);
             }
         }

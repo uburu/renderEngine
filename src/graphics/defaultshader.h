@@ -12,6 +12,8 @@ public:
 
     virtual bool Fragment(const Vector3d<> &bar, Color<> &) override;
 
+    virtual const Matrix<> &GetVaryingTri() const override;
+
 private:
     Matrix<> varying_uv;
     Matrix<> varying_tri;

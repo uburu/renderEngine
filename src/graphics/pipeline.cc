@@ -16,7 +16,10 @@ void Pipeline::DrawVisitor::Visit(Mesh &mesh) {
             _pipeline._shader->Vertex(i, j);
         }
 
-        // _pipeline._canvas->DrawFace();
+        auto &varying_tri = _pipeline._shader->GetVaryingTri();
+        Vector3d<> depth(varying_tri.At(2, 0), varying_tri.At(2, 1), varying_tri.At(2, 2));
+
+        _pipeline._canvas->DrawFace(*_pipeline._shader, _pipeline._shader->GetVaryingTri(), depth);
     } 
 }
 
@@ -56,4 +59,6 @@ void Pipeline::SetSceneGraph(std::shared_ptr<SceneGraph> scene_graph) {
 void Pipeline::Draw() {
     DrawVisitor drawer(*this);
     _scene_graph->Accept(drawer);
+
+    _canvas->Flush();
 }

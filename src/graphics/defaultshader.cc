@@ -45,3 +45,7 @@ bool DefaultShader::Fragment(const Vector3d<> &bar, Color<> &color) {
 
     return false;
 }
+
+const Matrix<> &DefaultShader::GetVaryingTri() const {
+    return varying_tri;
+}
