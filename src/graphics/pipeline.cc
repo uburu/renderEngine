@@ -12,10 +12,9 @@ void Pipeline::DrawVisitor::Visit(Mesh &) {
 
 Pipeline::Pipeline(
         std::shared_ptr<Canvas> canvas,
-        std::shared_ptr<VertexShader> vertex_shader,
-        std::shared_ptr<FragmentShader> fragment_shader,
+        std::shared_ptr<Shader> shader,
         std::shared_ptr<SceneGraph> scene_graph
-) : _canvas(canvas), _vertex_shader(vertex_shader), _fragment_shader(fragment_shader), _scene_graph(scene_graph)
+) : _canvas(canvas), _shader(shader), _scene_graph(scene_graph)
 {}
 
 std::shared_ptr<Canvas> Pipeline::GetCanvas() const {
@@ -27,21 +26,12 @@ void Pipeline::SetCanvas(std::shared_ptr<Canvas> canvas) {
 }
 
 
-std::shared_ptr<VertexShader> Pipeline::GetVertexShader() const {
-    return _vertex_shader;
+std::shared_ptr<Shader> Pipeline::GetShader() const {
+    return _shader;
 }
 
-void Pipeline::SetVertexShader(std::shared_ptr<VertexShader> vertex_shader) {
-    _vertex_shader = vertex_shader;
-}
-
-
-std::shared_ptr<FragmentShader> Pipeline::GetFragmentShader() const {
-    return _fragment_shader;
-}
-
-void Pipeline::SetFragmentShader(std::shared_ptr<FragmentShader> fragment_shader) {
-    _fragment_shader = fragment_shader;
+void Pipeline::SetShader(std::shared_ptr<Shader> shader) {
+    _shader = shader;
 }
 
 
