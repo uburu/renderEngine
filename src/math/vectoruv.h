@@ -49,7 +49,7 @@ template <typename T>
 template <typename ElementConverter>
 VectorUV<std::invoke_result_t<ElementConverter, std::add_lvalue_reference_t<T>>> 
 VectorUV<T>::Map(ElementConverter converter) const {
-    Vector2d<T>::MatrixSizeAdapter adapter(*this);
+    typename Vector2d<T>::MatrixSizeAdapter adapter(*this);
     return std::move(Matrix<T>::Map(converter));
 }
 
