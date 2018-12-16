@@ -23,6 +23,8 @@ public:
 
     virtual size_t GetFaceCount() const = 0;
     virtual Face GetFace(FaceIndex) const = 0;
+
+    Vector3d<> GetVertexPositionInFace(FaceIndex, size_t vertex_number) const;
 };
 
 #endif // UBURU_RENDERENGINE_MESH_H
