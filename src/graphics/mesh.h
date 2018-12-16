@@ -7,8 +7,22 @@
 #include "math/vector3d.h"
 
 using VertexIndex = size_t;
+using UVIndex = size_t;
+using NormalIndex = size_t;
 using FaceIndex = size_t;
-using Face = std::vector<VertexIndex>;
+
+struct FaceElement {
+    FaceElement(VertexIndex, UVIndex, NormalIndex);
+
+    bool operator==(const FaceElement &) const;
+    bool operator!=(const FaceElement &) const;
+
+    VertexIndex vertex;
+    UVIndex     uv;
+    NormalIndex normal;
+};
+
+using Face = std::vector<FaceElement>;
 
 
 class Mesh : public SceneNode {
@@ -19,12 +33,14 @@ public:
 
     virtual size_t GetVertexCount() const = 0;
     virtual Vector3d<double> GetVertexPosition(VertexIndex) const = 0; 
-    virtual void SetVertexPosition(VertexIndex, const Vector3d<double> &) = 0; 
+    virtual void SetVertexPosition(VertexIndex, const Vector3d<double> &) = 0;
+    virtual Vector3d<> GetVertexNormal(VertexIndex) const = 0;
 
     virtual size_t GetFaceCount() const = 0;
     virtual Face GetFace(FaceIndex) const = 0;
 
     Vector3d<> GetVertexPositionInFace(FaceIndex, size_t vertex_number) const;
+    Vector3d<> GetVertexNormalInFace(FaceIndex, size_t vertex_number) const;
 };
 
 #endif // UBURU_RENDERENGINE_MESH_H

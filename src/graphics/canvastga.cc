@@ -1,5 +1,11 @@
 #include "canvastga.h"
 
+#include <limits>
+
+#include "shader.h"
+#include "math/vector2d.h"
+#include "math/util.h"
+
 CanvasTGA::CanvasTGA(int width, int height)
     : Canvas(width, height),
       _image(std::make_shared<TGAImage>(width, height, TGAImage::kRGBA)) {
@@ -51,8 +57,7 @@ void CanvasTGA::DrawLine(Vector3d<int> point1, Vector3d<int> point2, const Color
   }
 }
 
-void CanvasTGA::DrawFace(const Shader &,
-                         Vector3d<int> point1,
+void CanvasTGA::DrawFace(Vector3d<int> point1,
                          Vector3d<int> point2,
                          Vector3d<int> point3) {
 
@@ -83,6 +88,52 @@ void CanvasTGA::DrawFace(const Shader &,
       }
     }
   }
+}
+
+void CanvasTGA::DrawFace(Shader &shader, const Matrix<> &pts, double depth) {
+    Matrix<> pts2(3, 2);
+    for(size_t i = 0; i < 3; ++i) { 
+      pts2.At(i, 0) = pts.At(i, 0) / pts.At(i, 3);
+      pts2.At(i, 1) = pts.At(i, 1) / pts.At(i, 3);
+    }
+
+    Vector2d<> bboxmin(std::numeric_limits<double>::max(), std::numeric_limits<double>::max());
+    Vector2d<> bboxmax(-std::numeric_limits<double>::max(), -std::numeric_limits<double>::max());
+    Vector2d<> clamp(_image->GetWidth()-1, _image->GetHeight()-1);
+    
+    for(size_t i = 0, j = 0; i < 3; ++i) {
+      for(j = 0; j < 2; ++j) {
+        bboxmin.At(j) = std::max(0.0, std::min(bboxmin.At(j), pts2.At(i, j)));
+        bboxmax.At(j) = std::min(clamp.At(j), std::max(bboxmax.At(j), pts2.At(i, j)));
+      }
+    }
+
+    Vector2d<double> P;
+    Color<> color;
+
+    Vector3d<> bc_screen;
+    Vector3d<> bc_clip;
+    int screen_width = _image->GetWidth();
+    for(P.x(bboxmin.x()); P.x() <= bboxmax.x(); ++P.x()) {
+        for(P.y(bboxmin.y()); P.y() <= bboxmax.y(); ++P.y()) {
+            bc_screen = Barycentric(
+              Vector2d(pts2.At(0, 0), pts2.At(0, 1)),
+              Vector2d(pts2.At(1, 0), pts2.At(1, 1)),
+              Vector2d(pts2.At(2, 0), pts2.At(2, 1)),
+              P
+            );
+
+            bc_clip = Vector3d(bc_screen.x() / pts.At(0, 3), bc_screen.y() / pts.At(1, 3), bc_screen.z() / pts.At(2, 3));
+            bc_clip /= (bc_clip.x() + bc_clip.y() + bc_clip.z());
+
+            if(bc_screen.x() < 0. || bc_screen.y() < 0. || bc_screen.z() < 0. || depth_buffer[static_cast<size_t>(P.x()*P.y()*screen_width)] > depth) continue;
+
+            if(!shader.Fragment(bc_clip, color)) {
+              depth_buffer[static_cast<size_t>(P.x()+P.y()*screen_width)] = depth;
+              _image->SetPixel(static_cast<int>(P.x()), static_cast<int>(P.y()), color);
+            }
+        }
+    }
 }
 
 void CanvasTGA::Flush() {

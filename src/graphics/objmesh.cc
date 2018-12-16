@@ -1,13 +1,20 @@
 #include <sstream>
 #include "objmesh.h"
+#include "math/vectoruv.h"
 
 ObjMesh::ObjMesh(std::string_view id) : Mesh(id) {}
 
-ObjMesh::ObjMesh(std::string_view id,
-                 const std::vector<Vector3d<double>> &vertex_positions,
-                 const std::vector<Face> &faces) : Mesh(id),
-                                                   _vertex_positions(vertex_positions),
-                                                   _faces(faces) {}
+ObjMesh::ObjMesh(
+  std::string_view id, 
+    const std::vector<Vector3d<double>> &vertices, 
+    const std::vector<Vector3d<double>> &normals, 
+    const std::vector<VectorUV<double>> &uvs,
+    const std::vector<Face> &faces
+) : Mesh(id),
+  _vertex_positions(vertices),
+  _normals(normals),
+  _uvs(uvs),
+  _faces(faces) {}
 
 ObjMesh::ObjMesh(std::string_view id, std::vector<Vector3d<double>> &&vertex_positions, std::vector<Face> &&faces)
     : Mesh(id),
@@ -26,6 +33,10 @@ void ObjMesh::SetVertexPosition(VertexIndex index, const Vector3d<double> &verte
   _vertex_positions[index] = vertex_position;
 }
 
+Vector3d<> ObjMesh::GetVertexNormal(VertexIndex index) const {
+    return _normals[index];
+}
+
 size_t ObjMesh::GetFaceCount() const {
   return _faces.size();
 }
@@ -36,6 +47,8 @@ Face ObjMesh::GetFace(FaceIndex index) const {
 
 std::shared_ptr<ObjMesh> ObjMesh::LoadFromFile(std::string_view id, std::string_view path) {
   std::vector<Vector3d<double>> vertex_positions;
+  std::vector<Vector3d<double>> normals;
+  std::vector<VectorUV<double>> uvs;
   std::vector<Face> faces;
 
   std::ifstream in;
@@ -51,18 +64,36 @@ std::shared_ptr<ObjMesh> ObjMesh::LoadFromFile(std::string_view id, std::string_
       Vector3d<> v;
       for (int i = 0; i < 3; ++i) iss >> v.RawData()[i];
       vertex_positions.push_back(v);
+    } else if(!line.compare(0, 3, "vn ")) {
+      
+      iss >> trash >> trash;
+      Vector3d<> normal;
+
+      for(size_t i = 0; i < 3; ++i) iss >> normal.At(i);
+      normals.push_back(normal);
+
+    } else if(!line.compare(0, 3, "vt ")) {
+      iss >> trash >> trash;
+      VectorUV<> uv;
+      for(int i = 0; i < 2; ++i) iss >> uv.At(i);
+      uvs.push_back(uv);
     } else if (!line.compare(0, 2, "f ")) {
-      std::vector<FaceIndex> f;
-      int itrash, idx;
+      Face f;
+      VertexIndex v;
+      UVIndex uv;
+      NormalIndex n;
+
       iss >> trash;
 
-      while (iss >> idx >> trash >> itrash >> trash >> itrash) {
-        idx--; // in wavefront obj all indices start at 1, not zero
-        f.push_back(static_cast<FaceIndex>(idx));
+      while (iss >> v >> trash >> uv >> trash >> n) {
+        v--; // in wavefront obj all indices start at 1, not zero
+        uv--;
+        n--;
+        f.push_back(FaceElement(v, uv, n));
       }
       faces.push_back(f);
     }
   }
 
-  return std::make_shared<ObjMesh>(id, std::move(vertex_positions), std::move(faces));
+  return std::make_shared<ObjMesh>(id, std::move(vertex_positions), std::move(normals), std::move(uvs), std::move(faces));
 }

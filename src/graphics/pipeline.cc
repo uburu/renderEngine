@@ -1,13 +1,23 @@
 #include "pipeline.h"
-
-#include <chrono>
+#include "mesh.h"
+#include "shader.h"
 
 Pipeline::DrawVisitor::DrawVisitor(Pipeline &pipeline)
 : _pipeline(pipeline) 
 {}
 
-void Pipeline::DrawVisitor::Visit(Mesh &) {
-    // TODO:
+void Pipeline::DrawVisitor::Visit(Mesh &mesh) {
+    size_t i = 0, j = 0;
+    size_t faces_count = mesh.GetFaceCount();
+    constexpr size_t kVertexInFaceCount = 3;
+
+    for(i = 0; i < faces_count; ++i) {
+        for(j = 0; j < kVertexInFaceCount; ++j) {
+            _pipeline._shader->Vertex(i, j);
+        }
+
+        // _pipeline._canvas->DrawFace();
+    } 
 }
 
 Pipeline::Pipeline(
@@ -43,23 +53,7 @@ void Pipeline::SetSceneGraph(std::shared_ptr<SceneGraph> scene_graph) {
     _scene_graph = scene_graph;
 }
 
-void Pipeline::Render() {
-    using namespace std::chrono;
-    static constexpr double kOneSecond = 1000.0;
-
-    auto start_time = high_resolution_clock::now();
-
-    Draw();
-
-    auto end_time = high_resolution_clock::now();
-    _fps = duration_cast<milliseconds>(end_time - start_time).count() / kOneSecond;
-}
-
 void Pipeline::Draw() {
     DrawVisitor drawer(*this);
     _scene_graph->Accept(drawer);
-}
-
-double Pipeline::GetFPS() const {
-    return _fps;
 }

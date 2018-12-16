@@ -33,18 +33,13 @@ public:
 
     std::shared_ptr<SceneGraph> GetSceneGraph() const;
     void SetSceneGraph(std::shared_ptr<SceneGraph>);
-
-    void Render();
-    virtual double GetFPS() const;
-
-protected:
+    
     virtual void Draw();
 
+protected:
     std::shared_ptr<Canvas>         _canvas;
     std::shared_ptr<Shader>         _shader;
     std::shared_ptr<SceneGraph>     _scene_graph;
-
-    double _fps;
 };
 
 #endif // UBURU_RENDERENGINE_PIPELINE_H

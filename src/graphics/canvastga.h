@@ -13,8 +13,9 @@ class CanvasTGA : public Canvas {
   void                      SetTGAImage(std::shared_ptr<TGAImage>);
 
   virtual void DrawPoint(const Vector3d<int> &, const Color<> &) override;
-  virtual void DrawLine(Vector3d<int> , Vector3d<int> , const Color<> &) override;
-  virtual void DrawFace(const Shader &, Vector3d<int> , Vector3d<int> , Vector3d<int> ) override;
+  virtual void DrawLine(Vector3d<int>, Vector3d<int>, const Color<> &) override;
+  virtual void DrawFace(Vector3d<int>, Vector3d<int>, Vector3d<int> ) override;
+  virtual void DrawFace(Shader &shader, const Matrix<> &pts, double depth) override;
   virtual void Flush() override;
 
  private:
