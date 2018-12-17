@@ -8,9 +8,11 @@
 
 class Shader {
 public:
+    Shader();
+
     virtual ~Shader();
 
-    void SetMesh(std::shared_ptr<Mesh>);
+    void SetMesh(Mesh &);
 
     virtual Vector4d<> Vertex(FaceIndex, VertexIndex) = 0;
 
@@ -19,7 +21,7 @@ public:
     virtual const Matrix<> &GetVaryingTri() const = 0;
 
 protected:
-    std::shared_ptr<Mesh> mesh;
+    Mesh *mesh;
 };
 
 #endif // UBURU_RENDERENGINE_SHADER_H

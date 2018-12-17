@@ -7,7 +7,7 @@
 
 Renderer::Renderer() 
 : pipeline(
-    std::make_shared<CanvasTGA>(1024, 1024),
+    std::make_shared<CanvasTGA>(800, 800),
     std::make_shared<DefaultShader>(),
     std::make_shared<SceneGraph>("root")
 ), fps(0)

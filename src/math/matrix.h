@@ -469,7 +469,7 @@ Matrix<T> Matrix<T>::operator-(const Matrix &rhs) const {
 
 template <typename T>
 Matrix<T> Matrix<T>::operator*(const Matrix &rhs) const {
-    assert(columns == rhs.rows && "Matrix multiplication sizes mismatch");
+    // assert(columns == rhs.rows && "Matrix multiplication sizes mismatch");
 
     auto result = Zero(rows, rhs.columns, order);
 

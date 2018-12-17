@@ -26,6 +26,9 @@ class Canvas {
   virtual void DrawFace(Shader &shader, const Matrix<> &pts, const Vector3d<> &depth) = 0;
   virtual void Flush() = 0;
 
+  int GetWidth() const;
+  int GetHeight() const;
+
  protected:
   virtual void InitializeDepthBuffer();
 

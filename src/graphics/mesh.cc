@@ -20,17 +20,17 @@ void Mesh::Accept(SceneGraphVisitor &visitor) {
     visitor.Visit(*this);
 }
 
-Vector3d<> Mesh::GetVertexPositionInFace(FaceIndex face_index, size_t vertex_number) const {
+const Vector3d<> &Mesh::GetVertexPositionInFace(FaceIndex face_index, size_t vertex_number) const {
     auto face = GetFace(face_index);
     return GetVertexPosition(face[vertex_number].vertex);
 }
 
-VectorUV<> Mesh::GetVertexUVInFace(FaceIndex face_index, size_t vertex_number) const {
+const VectorUV<> &Mesh::GetVertexUVInFace(FaceIndex face_index, size_t vertex_number) const {
     auto face = GetFace(face_index);
     return GetVertexUV(face[vertex_number].uv);
 }
 
-Vector3d<> Mesh::GetVertexNormalInFace(FaceIndex face_index, size_t vertex_number) const {
+const Vector3d<> &Mesh::GetVertexNormalInFace(FaceIndex face_index, size_t vertex_number) const {
     auto face = GetFace(face_index);
     return GetVertexNormal(face[vertex_number].normal);
 } 

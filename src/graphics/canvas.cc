@@ -5,6 +5,14 @@ Canvas::Canvas(int width, int height)
 
 Canvas::~Canvas() {}
 
+int Canvas::GetWidth() const {
+  return width;
+}
+
+int Canvas::GetHeight() const {
+  return height;
+}
+
 void Canvas::InitializeDepthBuffer() {
   for (int i = 0; i < width * height; ++i) {
     depth_buffer.push_back(kDepthBufferNoValue);

@@ -240,7 +240,7 @@ bool TGAImage::UnloadDataRLE(std::ofstream &out) {
 
 Color<> TGAImage::GetPixel(int x, int y) const {
     if(data == nullptr) throw std::runtime_error("No data in TGA image");
-    assert(x >= 0 || y >= 0 || x < width || y < height && "Invalid TGA image index");
+    if(x < 0 || y < 0 || x >= width || y >= height) return Color<>(0, 0, 0, 0);
 
     unsigned char *pixel = data + (x + y*width)*bytespp;
 
@@ -249,7 +249,7 @@ Color<> TGAImage::GetPixel(int x, int y) const {
 
 void TGAImage::SetPixel(int x, int y, const Color<> &c) {
     if(data == nullptr) throw std::runtime_error("No data in TGA image");
-    assert(x >= 0 || y >= 0 || x < width || y < height && "Invalid TGA image index");
+    if(x < 0 || y < 0 || x >= width || y >= height) return;
 
     Color<> color = c;
     std::swap(color.b(), color.r());

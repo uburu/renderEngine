@@ -269,11 +269,11 @@ const T &Vector3d<T>::At(size_t i) const {
 
 template <typename T>
 Vector3d<T> Vector3d<T>::Cross(const Vector3d<T> &rhs) const {
-    return std::move(Vector3d<T>(
+    return Vector3d<T>(
         this->y()*rhs.z() - this->z()*rhs.y(),
         this->z()*rhs.x() - this->x()*rhs.z(),
         this->x()*rhs.y() - this->y()*rhs.x()
-    ));
+    );
 }
 
 template <typename T>

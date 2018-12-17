@@ -8,6 +8,7 @@ include(cmake/libraries.cmake)
 include(cmake/util.cmake)
 
 REQUIRE_CXX_17()
+set(CMAKE_CXX_FLAGS "-Ofast")
 
 add_definitions(${${CMAKE_PROJECT_NAME}_DEFINITIONS})
 include_directories(${${CMAKE_PROJECT_NAME}_INCLUDE_DIRECTORIES})

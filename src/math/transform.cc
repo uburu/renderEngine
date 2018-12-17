@@ -1,7 +1,7 @@
 #include "transform.h"
 
 Matrix4x4<> Transform::Viewport(int x, int y, int width, int height) {
-    Matrix4x4<> result;
+    Matrix4x4<> result = Matrix4x4<>::Identity();
 
     result.At(0, 3) = x + width/2.0;
     result.At(1, 3) = y + height/2.0;

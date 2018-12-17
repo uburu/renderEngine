@@ -23,10 +23,10 @@ class ObjMesh : public Mesh {
   ObjMesh(std::string_view id, std::vector<Vector3d<double>> &&, std::vector<Face> &&);
 
   virtual size_t           GetVertexCount() const override;
-  virtual Vector3d<double> GetVertexPosition(VertexIndex) const override;
+  virtual const Vector3d<double> &GetVertexPosition(VertexIndex) const override;
   virtual void             SetVertexPosition(VertexIndex, const Vector3d<double> &) override;
-  virtual VectorUV<> GetVertexUV(VertexIndex) const override;
-  virtual Vector3d<> GetVertexNormal(VertexIndex) const override;
+  virtual const VectorUV<> &GetVertexUV(VertexIndex) const override;
+  virtual const Vector3d<> &GetVertexNormal(VertexIndex) const override;
 
   virtual size_t GetFaceCount() const override;
   virtual Face   GetFace(FaceIndex) const override;

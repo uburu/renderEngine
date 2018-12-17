@@ -3,4 +3,5 @@ SET(CMD_LIBRARY  uuappcommand)
 SET(MATH_LIBRARY uumath)
 SET(CG_LIBRARY   uugraphics)
 
-SET(CURVE_EXAMPLE uucurves)
+SET(CURVE_EXAMPLE  uucurves)
+SET(RENDER_EXAMPLE uurender)

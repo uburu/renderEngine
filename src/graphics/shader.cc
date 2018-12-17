@@ -1,7 +1,10 @@
 #include "shader.h"
 
+Shader::Shader(): mesh(nullptr) 
+{}
+
 Shader::~Shader() {}
 
-void Shader::SetMesh(std::shared_ptr<Mesh> mesh) {
-    this->mesh = mesh;
+void Shader::SetMesh(Mesh &mesh) {
+    this->mesh = &mesh;
 }

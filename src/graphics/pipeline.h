@@ -5,6 +5,7 @@
 
 #include "canvas.h"
 #include "scenegraph.h"
+#include "math/matrix4x4.h"
 
 #include "scenegraphvisitor.h"
 
@@ -40,6 +41,7 @@ protected:
     std::shared_ptr<Canvas>         _canvas;
     std::shared_ptr<Shader>         _shader;
     std::shared_ptr<SceneGraph>     _scene_graph;
+    Matrix4x4<> viewport;
 };
 
 #endif // UBURU_RENDERENGINE_PIPELINE_H

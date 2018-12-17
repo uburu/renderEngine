@@ -1,5 +1,5 @@
 #include "defaultshader.h"
-#include "math/Transform.h"
+#include "math/transform.h"
 
 DefaultShader::DefaultShader() 
 : Shader(), 
@@ -19,22 +19,22 @@ Vector4d<> DefaultShader::Vertex(FaceIndex face_index, size_t vertex_i) {
     assert(this->mesh != nullptr);
 
     auto uv = this->mesh->GetVertexUVInFace(face_index, vertex_i);
-    varying_uv.At(vertex_i, 0) = uv.u();
-    varying_uv.At(vertex_i, 1) = uv.v();
+    varying_uv.At(0, vertex_i) = uv.u();
+    varying_uv.At(1, vertex_i) = uv.v();
 
     // TODO normals
 
-    Vector4d<> gl_vertex = projection*modelview*this->mesh->GetVertexPositionInFace(face_index, vertex_i);
-    varying_tri.At(vertex_i, 0) = gl_vertex.x();
-    varying_tri.At(vertex_i, 1) = gl_vertex.y();
-    varying_tri.At(vertex_i, 2) = gl_vertex.z();
-    varying_tri.At(vertex_i, 3) = gl_vertex.w();
 
-    auto ndc_vertex = gl_vertex / gl_vertex.w();
-    ndc_tri.At(vertex_i, 0) = ndc_vertex.x();
-    ndc_tri.At(vertex_i, 1) = ndc_vertex.y(); 
-    ndc_tri.At(vertex_i, 2) = ndc_vertex.z(); 
-    ndc_tri.At(vertex_i, 3) = ndc_vertex.w();
+    Vector4d<> gl_vertex = projection*modelview*Vector4d<>(this->mesh->GetVertexPositionInFace(face_index, vertex_i)).w(1);
+    varying_tri.At(0, vertex_i) = gl_vertex.x();
+    varying_tri.At(1, vertex_i) = gl_vertex.y();
+    varying_tri.At(2, vertex_i) = gl_vertex.z();
+    varying_tri.At(3, vertex_i) = gl_vertex.w();
+
+    // auto ndc_vertex = gl_vertex / gl_vertex.w();
+    // ndc_tri.At(0, vertex_i) = ndc_vertex.x();
+    // ndc_tri.At(1, vertex_i) = ndc_vertex.y(); 
+    // ndc_tri.At(2, vertex_i) = ndc_vertex.z();
 
     return gl_vertex;
 }

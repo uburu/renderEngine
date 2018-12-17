@@ -28,7 +28,7 @@ size_t ObjMesh::GetVertexCount() const {
   return _vertex_positions.size();
 }
 
-Vector3d<double> ObjMesh::GetVertexPosition(VertexIndex index) const {
+const Vector3d<double> &ObjMesh::GetVertexPosition(VertexIndex index) const {
   return _vertex_positions[index];
 }
 
@@ -36,11 +36,11 @@ void ObjMesh::SetVertexPosition(VertexIndex index, const Vector3d<double> &verte
   _vertex_positions[index] = vertex_position;
 }
 
-VectorUV<> ObjMesh::GetVertexUV(VertexIndex index) const {
+const VectorUV<> &ObjMesh::GetVertexUV(VertexIndex index) const {
   return _uvs[index];
 }
 
-Vector3d<> ObjMesh::GetVertexNormal(VertexIndex index) const {
+const Vector3d<> &ObjMesh::GetVertexNormal(VertexIndex index) const {
     return _normals[index];
 }
 
@@ -109,12 +109,14 @@ std::shared_ptr<ObjMesh> ObjMesh::LoadFromFile(std::string_view id, std::string_
   std::string base_name = path.data();
   base_name = base_name.substr(0, base_name.find_last_of('.'));
 
+  auto texture = TGAImage::LoadFromFile(base_name + "_diffuse.tga");
+  texture->FlipVertically();
   return std::make_shared<ObjMesh>(
     id, 
     std::move(vertex_positions), 
     std::move(normals), 
     std::move(uvs), 
     std::move(faces),
-    TGAImage::LoadFromFile(base_name + "_diffuse.tga")
+    texture
   );
 }
