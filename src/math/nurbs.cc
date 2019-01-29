@@ -31,7 +31,7 @@ void RationalBasisFunctions(
 
     // Calculate the first order nonrational basis functions n[i]
     int i = 0;
-    for(; i < nplusc; ++i) {
+    for(; i < nplusc-1; ++i) {
         if((t >= x[i]) && (t < x[i+1])) temp[i] = 1;
         else temp[i] = 0;
     }
